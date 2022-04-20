@@ -2398,68 +2398,57 @@ inline _Tpvec v_pack(const _wTpvec& a, const _wTpvec& b) \
     v_store(arr + _wTpvec::nlanes, b); \
     return _Tpvec(shr(vle##width##_v_##suffix##m2(arr, vl), 0, vl)); \
 } \
-inline void v_pack_store(_Tp* ptr, const _wTpvec& a) \
-{ \
-    _wTp arr[_Tpvec::nlanes] = {0}; \
-    v_store(arr, a); \
-    v_store(arr + _wTpvec::nlanes, _wTpvec(vmv_v_x_##suffix##m1(0, hvl))); \
-    vse##hwidth##_v_##hsuffix##m1(ptr, shr(vle##width##_v_##suffix##m2(arr, vl), 0, vl), hvl); \
-} \
 template<int n> inline \
 _Tpvec v_rshr_pack(const _wTpvec& a, const _wTpvec& b) \
 { \
-    _wTp arr[_Tpvec::nlanes] = {0}; \
-    v_store(arr, a); \
-    v_store(arr + _wTpvec::nlanes, b); \
-    return _Tpvec(rshr(vle##width##_v_##suffix##m2(arr, vl), n, vl)); \
+    return _Tpvec(rshr(vset(vlmul_ext_##suffix##m2(a), 1, b), n, vl)); \
 } \
 template<int n> inline \
 void v_rshr_pack_store(_Tp* ptr, const _wTpvec& a) \
 { \
-    _wTp arr[_Tpvec::nlanes] = {0}; \
-    v_store(arr, a); \
-    v_store(arr + _wTpvec::nlanes, _wTpvec(vmv_v_x_##suffix##m1(0, hvl))); \
-    vse##hwidth##_v_##hsuffix##m1(ptr, _Tpvec(rshr(vle##width##_v_##suffix##m2(arr, vl), n, vl)), hvl); \
+   vse##hwidth##_v_##hsuffix##mf2(ptr, rshr(a, n, vl), hvl); \
 }
 
-OPENCV_HAL_IMPL_RVV_PACK(v_uint8x16, uchar, v_uint16x8, ushort, 8, 16, u8, u16, vnclipu_wx_u8m1, vnclipu_wx_u8m1, 8, 16)
-OPENCV_HAL_IMPL_RVV_PACK(v_int8x16, schar, v_int16x8, short, 8, 16, i8, i16, vnclip_wx_i8m1, vnclip_wx_i8m1, 8, 16)
-OPENCV_HAL_IMPL_RVV_PACK(v_uint16x8, ushort, v_uint32x4, unsigned, 16, 32, u16, u32, vnclipu_wx_u16m1, vnclipu_wx_u16m1, 4, 8)
-OPENCV_HAL_IMPL_RVV_PACK(v_int16x8, short, v_int32x4, int, 16, 32, i16, i32, vnclip_wx_i16m1, vnclip_wx_i16m1, 4, 8)
-OPENCV_HAL_IMPL_RVV_PACK(v_uint32x4, unsigned, v_uint64x2, uint64, 32, 64, u32, u64, vnclipu_wx_u32m1, vnsrl_wx_u32m1, 2, 4)
-OPENCV_HAL_IMPL_RVV_PACK(v_int32x4, int, v_int64x2, int64, 32, 64, i32, i64, vnclip_wx_i32m1, vnsra_wx_i32m1, 2, 4)
+OPENCV_HAL_IMPL_RVV_PACK(v_uint8x16, uchar, v_uint16x8, ushort, 8, 16, u8, u16, vnclipu, vnclipu, 8, 16)
+OPENCV_HAL_IMPL_RVV_PACK(v_int8x16, schar, v_int16x8, short, 8, 16, i8, i16, vnclip, vnclip, 8, 16)
+OPENCV_HAL_IMPL_RVV_PACK(v_uint16x8, ushort, v_uint32x4, unsigned, 16, 32, u16, u32, vnclipu, vnclipu, 4, 8)
+OPENCV_HAL_IMPL_RVV_PACK(v_int16x8, short, v_int32x4, int, 16, 32, i16, i32, vnclip, vnclip, 4, 8)
+OPENCV_HAL_IMPL_RVV_PACK(v_uint32x4, unsigned, v_uint64x2, uint64, 32, 64, u32, u64, vnclipu, vnsrl, 2, 4)
+OPENCV_HAL_IMPL_RVV_PACK(v_int32x4, int, v_int64x2, int64, 32, 64, i32, i64, vnclip, vnsra, 2, 4)
+
+#define OPENCV_HAL_IMPL_RVV_PACK_STORE(_Tpvec, _Tp, _wTpvec, _wTp, hwidth, width, hsuffix, suffix, rshr, shr, hvl, vl) \
+inline void v_pack_store(_Tp* ptr, const _wTpvec& a) \
+{ \
+    vse##hwidth##_v_##hsuffix##mf2(ptr, shr(a, 0, vl), hvl); \
+}
+
+OPENCV_HAL_IMPL_RVV_PACK_STORE(v_uint8x16, uchar, v_uint16x8, ushort, 8, 16, u8, u16, vnclipu_wx_u8mf2, vnclipu_wx_u8mf2, 8, 16)
+OPENCV_HAL_IMPL_RVV_PACK_STORE(v_int8x16, schar, v_int16x8, short, 8, 16, i8, i16, vnclip_wx_i8mf2, vnclip_wx_i8mf2, 8, 16)
+OPENCV_HAL_IMPL_RVV_PACK_STORE(v_uint16x8, ushort, v_uint32x4, unsigned, 16, 32, u16, u32, vnclipu_wx_u16mf2, vnclipu_wx_u16mf2, 4, 8)
+OPENCV_HAL_IMPL_RVV_PACK_STORE(v_int16x8, short, v_int32x4, int, 16, 32, i16, i32, vnclip_wx_i16mf2, vnclip_wx_i16mf2, 4, 8)
+OPENCV_HAL_IMPL_RVV_PACK_STORE(v_uint32x4, unsigned, v_uint64x2, uint64, 32, 64, u32, u64, vnclipu_wx_u32mf2, vnsrl_wx_u32mf2, 2, 4)
+OPENCV_HAL_IMPL_RVV_PACK_STORE(v_int32x4, int, v_int64x2, int64, 32, 64, i32, i64, vnclip_wx_i32mf2, vnsra_wx_i32mf2, 2, 4)
+
 
 
 #define OPENCV_HAL_IMPL_RVV_PACK_U(_Tpvec, _Tp, _wTpvec, _wTp, hwidth, width, hsuffix, suffix, rshr, cast, hvl, vl) \
 inline _Tpvec v_pack_u(const _wTpvec& a, const _wTpvec& b) \
 { \
-    _wTp arr[_Tpvec::nlanes] = {0}; \
-    v_store(arr, a); \
-    v_store(arr + _wTpvec::nlanes, b); \
-    return _Tpvec(rshr(cast(vmax_vx_##suffix##m2(vle##width##_v_##suffix##m2(arr, vl), 0, vl)), 0, vl)); \
+    return _Tpvec(rshr(cast(vmax(vset(vlmul_ext_##suffix##m2(a), 1, b), 0, vl)), 0, vl)); \
 } \
 inline void v_pack_u_store(_Tp* ptr, const _wTpvec& a) \
 { \
-    _wTp arr[_Tpvec::nlanes] = {0}; \
-    v_store(arr, a); \
-    v_store(arr + _wTpvec::nlanes, _wTpvec(vmv_v_x_##suffix##m1(0, hvl))); \
-    vse##hwidth##_v_##hsuffix##m1(ptr, rshr(cast(vmax_vx_##suffix##m2(vle##width##_v_##suffix##m2(arr, vl), 0, vl)), 0, vl), hvl); \
+    vse##hwidth##_v_##hsuffix##mf2(ptr, vnclipu(vreinterpret_u##width##m1(vmax(a, 0, vl)), 0, vl), hvl); \
 } \
 template<int n> inline \
 _Tpvec v_rshr_pack_u(const _wTpvec& a, const _wTpvec& b) \
 { \
-    _wTp arr[_Tpvec::nlanes] = {0}; \
-    v_store(arr, a); \
-    v_store(arr + _wTpvec::nlanes, b); \
-    return _Tpvec(rshr(cast(vmax_vx_##suffix##m2(vle##width##_v_##suffix##m2(arr, vl), 0, vl)), n, vl)); \
+    return _Tpvec(vnclipu(cast(vmax(vset(vlmul_ext_##suffix##m2(a), 1, b), 0, vl)), n, vl)); \
 } \
 template<int n> inline \
 void v_rshr_pack_u_store(_Tp* ptr, const _wTpvec& a) \
 { \
-    _wTp arr[_Tpvec::nlanes] = {0}; \
-    v_store(arr, a); \
-    v_store(arr + _wTpvec::nlanes, _wTpvec(vmv_v_x_##suffix##m1(0, hvl))); \
-    v_store(ptr, _Tpvec(rshr(cast(vmax_vx_##suffix##m2(vle##width##_v_##suffix##m2(arr, vl), 0, vl)), n, vl))); \
+    vse##hwidth##_v_##hsuffix##mf2(ptr, vnclipu(vreinterpret_u##width##m1(vmax(a, 0, vl)), n, vl), hvl); \
 }
 
 OPENCV_HAL_IMPL_RVV_PACK_U(v_uint8x16, uchar, v_int16x8, short, 8, 16, u8, i16, vnclipu_wx_u8m1, vreinterpret_v_i16m2_u16m2, 8, 16)
@@ -2716,50 +2705,21 @@ OPENCV_HAL_IMPL_RVV_POPCOUNT_OP(v_uint64x2, v_int64x2, uint64, int64, u64)
 
 //////////// SignMask ////////////
 
-#ifndef __clang__
-#define OPENCV_HAL_IMPL_RVV_SIGNMASK_OP(_Tpvec, _Tp, suffix, vl, shift) \
+#define OPENCV_HAL_IMPL_RVV_SIGNMASK_OP(_Tpvec) \
 inline int v_signmask(const _Tpvec& a) \
 { \
-    int mask = 0; \
-    _Tpvec tmp = _Tpvec(vsrl_vx_##suffix##m1(a, shift, vl)); \
-    for( int i = 0; i < _Tpvec::nlanes; i++ ) \
-        mask |= (int)(tmp.val[i]) << i; \
-    return mask; \
+    uint8_t ans[4] = {0}; \
+    vsm(ans, vmslt(a, 0, _Tpvec::nlanes), _Tpvec::nlanes); \
+    return *(reinterpret_cast<int*>(ans)); \
 }
 
-OPENCV_HAL_IMPL_RVV_SIGNMASK_OP(v_uint8x16, uchar, u8, 16, 7)
-OPENCV_HAL_IMPL_RVV_SIGNMASK_OP(v_uint16x8, ushort, u16, 8, 15)
-OPENCV_HAL_IMPL_RVV_SIGNMASK_OP(v_uint32x4, unsigned, u32, 4, 31)
-OPENCV_HAL_IMPL_RVV_SIGNMASK_OP(v_uint64x2, uint64, u64, 2, 63)
-
-inline int v_signmask(const v_int8x16& a)
-{ return v_signmask(v_reinterpret_as_u8(a)); }
-inline int v_signmask(const v_int16x8& a)
-{ return v_signmask(v_reinterpret_as_u16(a)); }
-inline int v_signmask(const v_int32x4& a)
-{ return v_signmask(v_reinterpret_as_u32(a)); }
-inline int v_signmask(const v_float32x4& a)
-{ return v_signmask(v_reinterpret_as_u32(a)); }
-inline int v_signmask(const v_int64x2& a)
-{ return v_signmask(v_reinterpret_as_u64(a)); }
+OPENCV_HAL_IMPL_RVV_SIGNMASK_OP(v_int8x16)
+OPENCV_HAL_IMPL_RVV_SIGNMASK_OP(v_int16x8)
+OPENCV_HAL_IMPL_RVV_SIGNMASK_OP(v_int32x4)
+OPENCV_HAL_IMPL_RVV_SIGNMASK_OP(v_int64x2)
 #if CV_SIMD128_64F
-inline int v_signmask(const v_float64x2& a)
-{ return v_signmask(v_reinterpret_as_u64(a)); }
+// OPENCV_HAL_IMPL_RVV_SIGNMASK_OP(v_float64x2)
 #endif
-
-#else
-#define OPENCV_HAL_IMPL_RVV_SIGNMASK_OP(_Tpvec, width, vl) \
-inline int v_signmask(const _Tpvec& a) \
-{ \
-    uint8_t ans[16] = {0};\
-    vsm(ans, vmslt(a, 0, vl), vl);\
-    return reinterpret_cast<int*>(ans)[0];\
-}
-
-OPENCV_HAL_IMPL_RVV_SIGNMASK_OP(v_int8x16, 8, 16)
-OPENCV_HAL_IMPL_RVV_SIGNMASK_OP(v_int16x8, 16, 8)
-OPENCV_HAL_IMPL_RVV_SIGNMASK_OP(v_int32x4, 32, 4)
-OPENCV_HAL_IMPL_RVV_SIGNMASK_OP(v_int64x2, 64, 2)
 
 inline int v_signmask(const v_uint8x16& a)
 { return v_signmask(v_reinterpret_as_s8(a)); }
@@ -2774,8 +2734,6 @@ inline int v_signmask(const v_uint64x2& a)
 #if CV_SIMD128_64F
 inline int v_signmask(const v_float64x2& a)
 { return v_signmask(v_reinterpret_as_s64(a)); }
-#endif
-
 #endif
 
 //////////// Scan forward ////////////

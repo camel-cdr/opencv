@@ -3189,6 +3189,10 @@ Scheme:
 {R0 R1 R2 R3}, where:
 R0 = A0V0 + B0V1 + C0V2 + D0V3,
 R1 = A1V0 + B1V1 + C1V2 + D1V3
+R2 = A2V0 + B2V1 + C2V2 + D2V3,
+R3 = A3V0 + B3V1 + C3V2 + D3V3
+R4 = A4V4 + B4V5 + C4V6 + D4V7,
+R5 = A5V4 + B5V5 + C5V6 + D5V7
 ...
 @endcode
 */
