@@ -56,6 +56,19 @@
 #include "opencv2/core/hal/intrin.hpp"
 #include <iostream>
 #include <numeric>
+#if 0
+namespace cv
+{
+namespace hal_baseline
+{
+namespace rvv
+{
+    inline unsigned int VTraits<v_float32>::nlanes = vsetvlmax_e32m1();
+}
+}  
+}
+#endif
+
 
 #ifdef HAVE_OPENCL
 #include "opencl_kernels_dnn.hpp"
@@ -1287,7 +1300,44 @@ public:
                                         outptr[0] = out;
                                         out_j = 1;
                                     }
+                                #if 0
+                                if( stride_w == 1 )
+                                    {
+                                        int VECSZ = rvv::VTraits<rvv::v_float32>::nlanes;
+                                        int out_delta = VECSZ/stride_w;
+                                        rvv::v_float32 vw00 = rvv::v_setall_f32(w00), vw01 = rvv::v_setall_f32(w01), vw02 = rvv::v_setall_f32(w02),
+                                                  vw10 = rvv::v_setall_f32(w10), vw11 = rvv::v_setall_f32(w11), vw12 = rvv::v_setall_f32(w12),
+                                                  vw20 = rvv::v_setall_f32(w20), vw21 = rvv::v_setall_f32(w21), vw22 = rvv::v_setall_f32(w22);
+                                        rvv::v_float32 z = rvv::v_setzero_f32(), vbias = rvv::v_setall_f32(bias), vrc = rvv::v_setall_f32(relu_coeff);
+                                        for( ; out_j < outW1; out_j += out_delta )
+                                        {
+                                            if (out_j + out_delta > outW1)
+                                            {
+                                                if (out_j <= pad_l)
+                                                    break;
+                                                out_j = outW1 - out_delta;
+                                            }
+                                            int in_j = out_j * stride_w - pad_l;
+                                            rvv::v_float32 v00 = rvv::v_load(imgptr0 + in_j),
+                                                      v01 = rvv::v_load(imgptr0 + in_j + dilation_w),
+                                                      v02 = rvv::v_load(imgptr0 + in_j + dilation_w*2),
+                                                      v10 = rvv::v_load(imgptr1 + in_j),
+                                                      v11 = rvv::v_load(imgptr1 + in_j + dilation_w),
+                                                      v12 = rvv::v_load(imgptr1 + in_j + dilation_w*2),
+                                                      v20 = rvv::v_load(imgptr2 + in_j),
+                                                      v21 = rvv::v_load(imgptr2 + in_j + dilation_w),
+                                                      v22 = rvv::v_load(imgptr2 + in_j + dilation_w*2);
 
+                                            rvv::v_float32 vout = rvv::v_add( rvv::v_mul(v00, vw00) , rvv::v_mul(v01, vw01) , rvv::v_mul(v02, vw02) ,
+                                                             rvv::v_mul(v10, vw10) , rvv::v_mul(v11, vw11) , rvv::v_mul(v12, vw12) ,
+                                                             rvv::v_mul(v20, vw20) , rvv::v_mul(v21, vw21) , rvv::v_mul(v22, vw22) , vbias);
+                                            if (relu)
+                                                vout = rvv::v_select(rvv::v_gt(vout , z), vout, rvv::v_mul(vout, vrc));
+                                            rvv::v_store(outptr + out_j, vout);
+                                            printf("OK!!!\n");
+                                        }
+                                    }
+                                #endif
                                 #if CV_SIMD
                                     // maybe with AVX or AVX512 strided depthwise convolution
                                     // can be accelerated with vector code, but with 4xfloat vectors
@@ -2496,6 +2546,41 @@ public:
                         v_store(dst0 + n, d0);
                         v_store(dst1 + n, d1);
                     }
+                #endif
+
+                #if 0
+                    rvv::v_float32 a00 = rvv::v_setall_f32(alpha00);
+                    rvv::v_float32 a01 = rvv::v_setall_f32(alpha01);
+                    rvv::v_float32 a10 = rvv::v_setall_f32(alpha10);
+                    rvv::v_float32 a11 = rvv::v_setall_f32(alpha11);
+                    rvv::v_float32 a20 = rvv::v_setall_f32(alpha20);
+                    rvv::v_float32 a21 = rvv::v_setall_f32(alpha21);
+                    rvv::v_float32 a30 = rvv::v_setall_f32(alpha30);
+                    rvv::v_float32 a31 = rvv::v_setall_f32(alpha31);
+                    // printf("%d\n",rvv::VTraits<rvv::v_float32>::nlanes); vsetvlmax_e32m1()
+                    // for( ; n < nmax - rvv::VTraits<rvv::v_float32>::nlanes; n += rvv::VTraits<rvv::v_float32>::nlanes )
+                    for( ; n <= nmax - vsetvlmax_e32m1(); n += vsetvlmax_e32m1() )
+                    // for( ; n <= nmax - 4; n += 4 )
+                    {
+                        rvv::v_float32 d0 = rvv::v_load(dst0 + n);
+                        rvv::v_float32 d1 = rvv::v_load(dst1 + n);
+                        rvv::v_float32 b0 = rvv::v_load(bptr0 + n);
+                        rvv::v_float32 b1 = rvv::v_load(bptr1 + n);
+                        rvv::v_float32 b2 = rvv::v_load(bptr2 + n);
+                        rvv::v_float32 b3 = rvv::v_load(bptr3 + n);
+                        // TODO try to improve pipeline width
+                        d0 = rvv::v_fma(b0, a00, d0);
+                        d1 = rvv::v_fma(b0, a01, d1);
+                        d0 = rvv::v_fma(b1, a10, d0);
+                        d1 = rvv::v_fma(b1, a11, d1);
+                        d0 = rvv::v_fma(b2, a20, d0);
+                        d1 = rvv::v_fma(b2, a21, d1);
+                        d0 = rvv::v_fma(b3, a30, d0);
+                        d1 = rvv::v_fma(b3, a31, d1);
+                        rvv::v_store(dst0 + n, d0);
+                        rvv::v_store(dst1 + n, d1);
+                    }
+                    printf("OK!!!\n");
                 #endif
 
                     for( ; n < nmax; n++ )
