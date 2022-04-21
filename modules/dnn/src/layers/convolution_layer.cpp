@@ -63,7 +63,7 @@ namespace hal_baseline
 {
 namespace rvv
 {
-    inline unsigned int VTraits<v_float32>::nlanes = vsetvlmax_e32m1();
+    inline int VTraits<v_float32>::nlanes = vsetvlmax_e32m1();
 }
 }  
 }
@@ -2465,12 +2465,12 @@ public:
                 opt_AVX::fastGEMM( aptr, astep, bptr, bstep, cptr, cstep, mmax, kmax, nmax );
             else
         #endif
-        #if CV_TRY_RVV
-            if( useRVV ) {
-                opt_RVV::fastGEMM( aptr, astep, bptr, bstep, cptr, cstep, mmax, kmax, nmax );
-            }
-            else
-        #endif
+        // #if CV_TRY_RVV
+        //     if( useRVV ) {
+        //         opt_RVV::fastGEMM( aptr, astep, bptr, bstep, cptr, cstep, mmax, kmax, nmax );
+        //     }
+        //     else
+        // #endif
             for( m = 0; m < mmax; m += 2 )
             {
                 float* dst0 = cptr + cstep*m;
@@ -2516,7 +2516,7 @@ public:
                     }
                     n = 0;
 
-                #if CV_SIMD128
+                #if 0
                     v_float32x4 a00 = v_setall_f32(alpha00);
                     v_float32x4 a01 = v_setall_f32(alpha01);
                     v_float32x4 a10 = v_setall_f32(alpha10);
@@ -2548,7 +2548,7 @@ public:
                     }
                 #endif
 
-                #if 0
+                #if CV_SIMD128
                     rvv::v_float32 a00 = rvv::v_setall_f32(alpha00);
                     rvv::v_float32 a01 = rvv::v_setall_f32(alpha01);
                     rvv::v_float32 a10 = rvv::v_setall_f32(alpha10);
@@ -2557,10 +2557,7 @@ public:
                     rvv::v_float32 a21 = rvv::v_setall_f32(alpha21);
                     rvv::v_float32 a30 = rvv::v_setall_f32(alpha30);
                     rvv::v_float32 a31 = rvv::v_setall_f32(alpha31);
-                    // printf("%d\n",rvv::VTraits<rvv::v_float32>::nlanes); vsetvlmax_e32m1()
-                    // for( ; n < nmax - rvv::VTraits<rvv::v_float32>::nlanes; n += rvv::VTraits<rvv::v_float32>::nlanes )
-                    for( ; n <= nmax - vsetvlmax_e32m1(); n += vsetvlmax_e32m1() )
-                    // for( ; n <= nmax - 4; n += 4 )
+                    for( ; n < nmax - rvv::VTraits<rvv::v_float32>::nlanes; n += rvv::VTraits<rvv::v_float32>::nlanes )
                     {
                         rvv::v_float32 d0 = rvv::v_load(dst0 + n);
                         rvv::v_float32 d1 = rvv::v_load(dst1 + n);
@@ -2580,7 +2577,7 @@ public:
                         rvv::v_store(dst0 + n, d0);
                         rvv::v_store(dst1 + n, d1);
                     }
-                    printf("OK!!!\n");
+
                 #endif
 
                     for( ; n < nmax; n++ )
