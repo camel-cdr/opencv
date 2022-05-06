@@ -1,7 +1,7 @@
+#if 0
 #include "precomp.hpp"
 #include "opencv2/core/hal/intrin_rvv_vec.hpp"
 
-#if 0
 namespace cv
 {
 namespace hal_baseline

@@ -1434,6 +1434,7 @@ struct op_mul_scale
     {
         const v_float32 v_scalar = vx_setall_f32(*scalar);
         return v_scalar * a * b;
+        // return v_mul(v_scalar, a, b);
     }
     static inline T1 r(T1 a, T1 b, const T2* scalar)
     { return c_mul(a, b, *scalar); }
@@ -1573,6 +1574,7 @@ struct op_div_scale
     {
         const v_float32 v_scalar = vx_setall_f32(*scalar);
         return a * v_scalar / b;
+        // return v_div(v_mul(a, v_scalar), b);
     }
     static inline Tvec pre(const Tvec& denom, const Tvec& res)
     {
@@ -1593,6 +1595,7 @@ struct op_div_scale<float, float, v_float32>
     {
         const v_float32 v_scalar = vx_setall_f32(*scalar);
         return a * v_scalar / b;
+        // return v_div(v_mul(a, v_scalar), b);
     }
     static inline float r(float a, float denom, const float* scalar)
     { return c_div(a, denom, *scalar); }
@@ -1823,6 +1826,7 @@ struct op_recip
     {
         const v_float32 v_scalar = vx_setall_f32(*scalar);
         return v_scalar / a;
+        // return v_div(v_scalar , a);
     }
     static inline Tvec pre(const Tvec& denom, const Tvec& res)
     {
@@ -1843,6 +1847,7 @@ struct op_recip<float, float, v_float32>
     {
         const v_float32 v_scalar = vx_setall_f32(*scalar);
         return v_scalar / a;
+        // return v_div(v_scalar , a);
     }
     static inline float r(float denom, const float* scalar)
     { return c_div(*scalar, denom); }

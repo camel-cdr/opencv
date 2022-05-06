@@ -200,7 +200,7 @@ using namespace CV_CPU_OPTIMIZATION_HAL_NAMESPACE;
 #   undef CV_RVV
 #endif
 
-#if (CV_SSE2 || CV_NEON || CV_VSX || CV_MSA || CV_WASM_SIMD || CV_RVV071 || CV_RVV) && !defined(CV_FORCE_SIMD128_CPP)
+#if (CV_SSE2 || CV_NEON || CV_VSX || CV_MSA || CV_WASM_SIMD || CV_RVV071) && !defined(CV_FORCE_SIMD128_CPP)
 #define CV__SIMD_FORWARD 128
 #include "opencv2/core/hal/intrin_forward.hpp"
 #endif
@@ -229,8 +229,10 @@ using namespace CV_CPU_OPTIMIZATION_HAL_NAMESPACE;
 #elif CV_WASM_SIMD && !defined(CV_FORCE_SIMD128_CPP)
 #include "opencv2/core/hal/intrin_wasm.hpp"
 
-#elif CV_RVV && !defined(CV_FORCE_SIMD128_CPP)
+#elif CV_RVV && !defined(CV_FORCE_SIMD128_CPP) && !defined(CV_RVV_NEW)
 #include "opencv2/core/hal/intrin_rvv.hpp"
+#elif CV_RVV && !defined(CV_FORCE_SIMD128_CPP) && CV_RVV_NEW
+#include "opencv2/core/hal/intrin_cpp.hpp"
 #include "opencv2/core/hal/intrin_rvv_vec.hpp"
 #else
 
@@ -488,6 +490,16 @@ namespace CV__SIMD_NAMESPACE {
     #define VXPREFIX(func) v##func
 } // namespace
 using namespace CV__SIMD_NAMESPACE;
+
+#else
+#define CV__SIMD_NAMESPACE simd
+namespace CV__SIMD_NAMESPACE {
+    #define CV_SIMD 0
+    #define CV_SIMD_WIDTH 0
+
+    #define VXPREFIX(func) v##func
+} // namespace
+using namespace CV__SIMD_NAMESPACE;
 #endif
 
 namespace CV__SIMD_NAMESPACE {
@@ -663,6 +675,141 @@ namespace CV__SIMD_NAMESPACE {
     /** @brief SIMD processing state cleanup call */
     inline void vx_cleanup() { VXPREFIX(_cleanup)(); }
 
+#if CV_SIMD
+    
+    #define CV_SIMD_SCALABLE 0
+    #define CV_SIMD_SCALABLE_64F 0
+    #define SCALABLE_HAL_BEGIN 
+    #define SCALABLE_HAL_END 
+
+    template <class T>
+    struct VTraits;
+
+    template <>
+    struct VTraits<v_uint8> 
+    {
+        const static int nlanes = v_uint8::nlanes;
+        using lane_type = uchar;
+    };
+    template <>
+    struct VTraits<v_int8> 
+    {
+        const static int nlanes = v_int8::nlanes; 
+        using lane_type = schar;
+    };
+    template <>
+    struct VTraits<v_uint16> 
+    {
+        const static int nlanes = v_uint16::nlanes; 
+        using lane_type = ushort;
+    };
+    template <>
+    struct VTraits<v_int16> 
+    {
+        const static int nlanes = v_int16::nlanes; 
+        using lane_type = short;
+    };
+    template <>
+    struct VTraits<v_uint32> 
+    {
+        const static int nlanes = v_uint32::nlanes; 
+        using lane_type = uint;
+    };
+    template <>
+    struct VTraits<v_int32> 
+    {
+        const static int nlanes = v_int32::nlanes; 
+        using lane_type = int;
+    };
+
+    template <>
+    struct VTraits<v_float32> 
+    {
+        const static int nlanes = v_float32::nlanes; 
+        using lane_type = float;
+    };
+    template <>
+    struct VTraits<v_uint64> 
+    {
+        const static int nlanes = v_uint64::nlanes; 
+        using lane_type = uint64;
+    };
+    template <>
+    struct VTraits<v_int64> 
+    {
+        const static int nlanes = v_int64::nlanes; 
+        using lane_type = int64;
+    };
+    #if CV_SIMD_64F
+    template <>
+    struct VTraits<v_float64> 
+    {
+        const static int nlanes = v_float64::nlanes; 
+        using lane_type = double;
+    };
+    #endif
+
+    #define OPENCV_HAL_IMPL_RVV_BIN_OP_FP(_Tpvec, vl) \
+    inline _Tpvec v_add(const _Tpvec& a, const _Tpvec& b) \
+    { \
+        return a + b; \
+    } \
+    inline _Tpvec v_sub(const _Tpvec& a, const _Tpvec& b) \
+    { \
+        return a - b; \
+    } \
+    inline _Tpvec v_mul(const _Tpvec& a, const _Tpvec& b) \
+    { \
+        return a * b; \
+    } \
+    inline _Tpvec v_div(const _Tpvec& a, const _Tpvec& b) \
+    { \
+        return a / b; \
+    } \
+    template<typename... Args> \
+    inline _Tpvec v_add(_Tpvec f1, _Tpvec f2, Args... vf) { \
+        return v_add(f1 + f2, vf...); \
+    } \
+    template<typename... Args> \
+    inline _Tpvec v_mul(_Tpvec f1, _Tpvec f2, Args... vf) { \
+        return v_mul(f1 * f2, vf...); \
+    }
+
+    OPENCV_HAL_IMPL_RVV_BIN_OP_FP( v_float32, VTraits<v_float32>::nlanes)
+    #if CV_SIMD_SCALABLE_64F
+    OPENCV_HAL_IMPL_RVV_BIN_OP_FP( v_float64, VTraits<v_float64>::nlanes)
+    #endif
+
+    #define OPENCV_HAL_IMPL_RVV_CMP_OP(_Tpvec, intrin, op) \
+    inline _Tpvec v_##intrin(const _Tpvec& a, const _Tpvec& b) \
+    { \
+        return a op b; \
+    }
+
+    #define OPENCV_HAL_IMPL_RVV_CMP(_Tpvec) \
+    OPENCV_HAL_IMPL_RVV_CMP_OP(_Tpvec, eq, ==) \
+    OPENCV_HAL_IMPL_RVV_CMP_OP(_Tpvec, ne, !=) \
+    OPENCV_HAL_IMPL_RVV_CMP_OP(_Tpvec, lt, <) \
+    OPENCV_HAL_IMPL_RVV_CMP_OP(_Tpvec, gt, >) \
+    OPENCV_HAL_IMPL_RVV_CMP_OP(_Tpvec, le, <=) \
+    OPENCV_HAL_IMPL_RVV_CMP_OP(_Tpvec, ge, >=)
+
+    // #define OPENCV_HAL_IMPL_RVV_CMP(_Tpvec) OPENCV_HAL_IMPL_RVV_CMP_OP(_Tpvec, gt, >)
+
+    OPENCV_HAL_IMPL_RVV_CMP(v_uint8)
+    OPENCV_HAL_IMPL_RVV_CMP(v_uint16)
+    OPENCV_HAL_IMPL_RVV_CMP(v_uint32)
+    OPENCV_HAL_IMPL_RVV_CMP(v_uint64)
+    OPENCV_HAL_IMPL_RVV_CMP(v_int8)
+    OPENCV_HAL_IMPL_RVV_CMP(v_int16)
+    OPENCV_HAL_IMPL_RVV_CMP(v_int32)
+    OPENCV_HAL_IMPL_RVV_CMP(v_int64)
+    OPENCV_HAL_IMPL_RVV_CMP(v_float32)
+    #if CV_SIMD_SCALABLE_64F
+    OPENCV_HAL_IMPL_RVV_CMP(v_float64)
+    #endif
+
+#endif
 
 //! @cond IGNORED
 

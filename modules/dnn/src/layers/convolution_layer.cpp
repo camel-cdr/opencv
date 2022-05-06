@@ -1243,27 +1243,27 @@ public:
                             const float* inptr_ = data_inp0 + (cn0*depth*height + in_d*height)*width;
                             float* outptr_ = data_out0 + ofs0;
 
-                        #if CV_TRY_AVX2
-                            if(useAVX2)
-                                opt_AVX2::fastDepthwiseConv(wptr, kernel_h, kernel_w,
-                                    stride_h, stride_w, dilation_h, dilation_w, pad_t, pad_l,
-                                    biasptr, relu, inptr_, height, width, outptr_, out_d, outH, outW);
-                            else
-                        #endif
-                        #if CV_TRY_AVX
-                            if(useAVX)
-                                opt_AVX::fastDepthwiseConv(wptr, kernel_h, kernel_w,
-                                    stride_h, stride_w, dilation_h, dilation_w, pad_t, pad_l,
-                                    biasptr, relu, inptr_, height, width, outptr_, out_d, outH, outW);
-                            else
-                        #endif
-                        #if CV_TRY_RVV
-                            if(useRVV)
-                                opt_RVV::fastDepthwiseConv(wptr, kernel_h, kernel_w,
-                                    stride_h, stride_w, dilation_h, dilation_w, pad_t, pad_l,
-                                    biasptr, relu, inptr_, height, width, outptr_, out_d, outH, outW);
-                            else
-                        #endif
+                        // #if CV_TRY_AVX2
+                        //     if(useAVX2)
+                        //         opt_AVX2::fastDepthwiseConv(wptr, kernel_h, kernel_w,
+                        //             stride_h, stride_w, dilation_h, dilation_w, pad_t, pad_l,
+                        //             biasptr, relu, inptr_, height, width, outptr_, out_d, outH, outW);
+                        //     else
+                        // #endif
+                        // #if CV_TRY_AVX
+                        //     if(useAVX)
+                        //         opt_AVX::fastDepthwiseConv(wptr, kernel_h, kernel_w,
+                        //             stride_h, stride_w, dilation_h, dilation_w, pad_t, pad_l,
+                        //             biasptr, relu, inptr_, height, width, outptr_, out_d, outH, outW);
+                        //     else
+                        // #endif
+                        // #if CV_TRY_RVV
+                        //     if(useRVV)
+                        //         opt_RVV::fastDepthwiseConv(wptr, kernel_h, kernel_w,
+                        //             stride_h, stride_w, dilation_h, dilation_w, pad_t, pad_l,
+                        //             biasptr, relu, inptr_, height, width, outptr_, out_d, outH, outW);
+                        //     else
+                        // #endif
                             {
                                 const float w00_ = wptr[0], w01_ = wptr[1], w02_ = wptr[2],
                                             w10 = wptr[3], w11 = wptr[4], w12 = wptr[5],
@@ -1338,14 +1338,16 @@ public:
                                         }
                                     }
                                 #endif
-                                #if CV_SIMD
+                                #if CV_SIMD || CV_SIMD_SCALABLE
                                     // maybe with AVX or AVX512 strided depthwise convolution
                                     // can be accelerated with vector code, but with 4xfloat vectors
                                     // it's hardly the case
+                                    SCALABLE_HAL_BEGIN
                                     if( stride_w == 1 )
                                     {
-                                        const int VECSZ = v_float32::nlanes;
-                                        const int out_delta = VECSZ/stride_w;
+                                        // printf("HERE!!\n");
+                                        int VECSZ = VTraits<v_float32>::nlanes;
+                                        int out_delta = VECSZ/stride_w;
                                         v_float32 vw00 = vx_setall_f32(w00), vw01 = vx_setall_f32(w01), vw02 = vx_setall_f32(w02),
                                                   vw10 = vx_setall_f32(w10), vw11 = vx_setall_f32(w11), vw12 = vx_setall_f32(w12),
                                                   vw20 = vx_setall_f32(w20), vw21 = vx_setall_f32(w21), vw22 = vx_setall_f32(w22);
@@ -1369,14 +1371,19 @@ public:
                                                       v21 = vx_load(imgptr2 + in_j + dilation_w),
                                                       v22 = vx_load(imgptr2 + in_j + dilation_w*2);
 
-                                            v_float32 vout = v00*vw00 + v01*vw01 + v02*vw02 +
-                                                             v10*vw10 + v11*vw11 + v12*vw12 +
-                                                             v20*vw20 + v21*vw21 + v22*vw22 + vbias;
+                                            v_float32 vout = v_add( v_mul(v00, vw00) , v_mul(v01, vw01) , v_mul(v02, vw02) ,
+                                                             v_mul(v10, vw10) , v_mul(v11, vw11) , v_mul(v12, vw12) ,
+                                                             v_mul(v20, vw20) , v_mul(v21, vw21) , v_mul(v22, vw22) , vbias);
+
+                                            // v_float32 vout = v00*vw00 + v01*vw01 + v02*vw02 +
+                                            //                  v10*vw10 + v11*vw11 + v12*vw12 +
+                                            //                  v20*vw20 + v21*vw21 + v22*vw22 + vbias;
                                             if (relu)
-                                                vout = v_select(vout > z, vout, vout*vrc);
+                                                vout = v_select(v_gt(vout, z), vout, v_mul(vout,vrc));
                                             v_store(outptr + out_j, vout);
                                         }
                                     }
+                                    SCALABLE_HAL_END
                                 #endif
                                     for (; out_j < outW1; out_j++)
                                     {
@@ -2450,21 +2457,21 @@ public:
             size_t bstep = b_->step1();
             size_t cstep = c_->step1();
 
-        #if CV_TRY_AVX512_SKX
-            if( useAVX512 )
-                opt_AVX512_SKX::fastGEMM( aptr, astep, bptr, bstep, cptr, cstep, mmax, kmax, nmax );
-            else
-        #endif
-        #if CV_TRY_AVX2
-            if( useAVX2 )
-                opt_AVX2::fastGEMM( aptr, astep, bptr, bstep, cptr, cstep, mmax, kmax, nmax );
-            else
-        #endif
-        #if CV_TRY_AVX
-            if( useAVX )
-                opt_AVX::fastGEMM( aptr, astep, bptr, bstep, cptr, cstep, mmax, kmax, nmax );
-            else
-        #endif
+        // #if CV_TRY_AVX512_SKX
+        //     if( useAVX512 )
+        //         opt_AVX512_SKX::fastGEMM( aptr, astep, bptr, bstep, cptr, cstep, mmax, kmax, nmax );
+        //     else
+        // #endif
+        // #if CV_TRY_AVX2
+        //     if( useAVX2 )
+        //         opt_AVX2::fastGEMM( aptr, astep, bptr, bstep, cptr, cstep, mmax, kmax, nmax );
+        //     else
+        // #endif
+        // #if CV_TRY_AVX
+        //     if( useAVX )
+        //         opt_AVX::fastGEMM( aptr, astep, bptr, bstep, cptr, cstep, mmax, kmax, nmax );
+        //     else
+        // #endif
         // #if CV_TRY_RVV
         //     if( useRVV ) {
         //         opt_RVV::fastGEMM( aptr, astep, bptr, bstep, cptr, cstep, mmax, kmax, nmax );
@@ -2516,24 +2523,24 @@ public:
                     }
                     n = 0;
 
-                #if 0
-                    v_float32x4 a00 = v_setall_f32(alpha00);
-                    v_float32x4 a01 = v_setall_f32(alpha01);
-                    v_float32x4 a10 = v_setall_f32(alpha10);
-                    v_float32x4 a11 = v_setall_f32(alpha11);
-                    v_float32x4 a20 = v_setall_f32(alpha20);
-                    v_float32x4 a21 = v_setall_f32(alpha21);
-                    v_float32x4 a30 = v_setall_f32(alpha30);
-                    v_float32x4 a31 = v_setall_f32(alpha31);
-
-                    for( ; n <= nmax - 4; n += 4 )
+                #if (CV_SIMD_SCALABLE) || (CV_SIMD128)
+                SCALABLE_HAL_BEGIN
+                    v_float32 a00 = v_setall_f32(alpha00);
+                    v_float32 a01 = v_setall_f32(alpha01);
+                    v_float32 a10 = v_setall_f32(alpha10);
+                    v_float32 a11 = v_setall_f32(alpha11);
+                    v_float32 a20 = v_setall_f32(alpha20);
+                    v_float32 a21 = v_setall_f32(alpha21);
+                    v_float32 a30 = v_setall_f32(alpha30);
+                    v_float32 a31 = v_setall_f32(alpha31);
+                    for( ; n < nmax - VTraits<v_float32>::nlanes; n += VTraits<v_float32>::nlanes )
                     {
-                        v_float32x4 d0 = v_load(dst0 + n);
-                        v_float32x4 d1 = v_load(dst1 + n);
-                        v_float32x4 b0 = v_load(bptr0 + n);
-                        v_float32x4 b1 = v_load(bptr1 + n);
-                        v_float32x4 b2 = v_load(bptr2 + n);
-                        v_float32x4 b3 = v_load(bptr3 + n);
+                        v_float32 d0 = v_load(dst0 + n);
+                        v_float32 d1 = v_load(dst1 + n);
+                        v_float32 b0 = v_load(bptr0 + n);
+                        v_float32 b1 = v_load(bptr1 + n);
+                        v_float32 b2 = v_load(bptr2 + n);
+                        v_float32 b3 = v_load(bptr3 + n);
                         // TODO try to improve pipeline width
                         d0 = v_fma(b0, a00, d0);
                         d1 = v_fma(b0, a01, d1);
@@ -2546,38 +2553,7 @@ public:
                         v_store(dst0 + n, d0);
                         v_store(dst1 + n, d1);
                     }
-                #endif
-
-                #if CV_SIMD128
-                    rvv::v_float32 a00 = rvv::v_setall_f32(alpha00);
-                    rvv::v_float32 a01 = rvv::v_setall_f32(alpha01);
-                    rvv::v_float32 a10 = rvv::v_setall_f32(alpha10);
-                    rvv::v_float32 a11 = rvv::v_setall_f32(alpha11);
-                    rvv::v_float32 a20 = rvv::v_setall_f32(alpha20);
-                    rvv::v_float32 a21 = rvv::v_setall_f32(alpha21);
-                    rvv::v_float32 a30 = rvv::v_setall_f32(alpha30);
-                    rvv::v_float32 a31 = rvv::v_setall_f32(alpha31);
-                    for( ; n < nmax - rvv::VTraits<rvv::v_float32>::nlanes; n += rvv::VTraits<rvv::v_float32>::nlanes )
-                    {
-                        rvv::v_float32 d0 = rvv::v_load(dst0 + n);
-                        rvv::v_float32 d1 = rvv::v_load(dst1 + n);
-                        rvv::v_float32 b0 = rvv::v_load(bptr0 + n);
-                        rvv::v_float32 b1 = rvv::v_load(bptr1 + n);
-                        rvv::v_float32 b2 = rvv::v_load(bptr2 + n);
-                        rvv::v_float32 b3 = rvv::v_load(bptr3 + n);
-                        // TODO try to improve pipeline width
-                        d0 = rvv::v_fma(b0, a00, d0);
-                        d1 = rvv::v_fma(b0, a01, d1);
-                        d0 = rvv::v_fma(b1, a10, d0);
-                        d1 = rvv::v_fma(b1, a11, d1);
-                        d0 = rvv::v_fma(b2, a20, d0);
-                        d1 = rvv::v_fma(b2, a21, d1);
-                        d0 = rvv::v_fma(b3, a30, d0);
-                        d1 = rvv::v_fma(b3, a31, d1);
-                        rvv::v_store(dst0 + n, d0);
-                        rvv::v_store(dst1 + n, d1);
-                    }
-
+                SCALABLE_HAL_END
                 #endif
 
                     for( ; n < nmax; n++ )
