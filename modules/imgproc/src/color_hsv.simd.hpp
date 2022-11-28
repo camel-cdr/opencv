@@ -286,8 +286,8 @@ struct RGB2HSV_f
         v_float32 v_diff = v_sub(v_max_rgb, v_min_rgb);
         v_s = v_div(v_diff, v_add(v_abs(v_max_rgb), v_eps));
 
-        v_float32 v_r_eq_max = v_eq(v_r, v_max_rgb);
-        v_float32 v_g_eq_max = v_eq(v_g, v_max_rgb);
+        v_float32_b v_r_eq_max = v_eq(v_r, v_max_rgb);
+        v_float32_b v_g_eq_max = v_eq(v_g, v_max_rgb);
         v_h = v_select(v_r_eq_max, v_sub(v_g, v_b),
               v_select(v_g_eq_max, v_sub(v_b, v_r), v_sub(v_r, v_g)));
         v_float32 v_res = v_select(v_r_eq_max,
@@ -693,8 +693,8 @@ struct RGB2HLS_f
 
         s = v_div(diff, v_select(v_lt(l, vhalf), msum, v_sub(vx_setall_f32(2.0f), msum)));
 
-        v_float32 rMaxMask = v_eq(maxRgb, r);
-        v_float32 gMaxMask = v_eq(maxRgb, g);
+        v_float32_b rMaxMask = v_eq(maxRgb, r);
+        v_float32_b gMaxMask = v_eq(maxRgb, g);
 
         h = v_select(rMaxMask, v_sub(g, b), v_select(gMaxMask, v_sub(b, r), v_sub(r, g)));
         v_float32 hpart = v_select(rMaxMask, v_select(v_lt(g, b), vx_setall_f32(360.0f), vx_setall_f32(0.0f)),
@@ -703,7 +703,7 @@ struct RGB2HLS_f
         v_float32 invDiff = v_div(vx_setall_f32(60.0f), diff);
         h = v_mul(v_muladd(h, invDiff, hpart), vhscale);
 
-        v_float32 diffEpsMask = v_gt(diff, vx_setall_f32(FLT_EPSILON));
+        v_float32_b diffEpsMask = v_gt(diff, vx_setall_f32(FLT_EPSILON));
 
         h = v_select(diffEpsMask, h, vx_setall_f32(0.0f));
         // l = l;
@@ -979,7 +979,7 @@ struct HLS2RGB_f
     {
         v_float32 v1 = vx_setall_f32(1.0f), v2 = vx_setall_f32(2.0f), v4 = vx_setall_f32(4.0f);
 
-        v_float32 lBelowHalfMask = v_le(l, vx_setall_f32(0.5f));
+        v_float32_b lBelowHalfMask = v_le(l, vx_setall_f32(0.5f));
         v_float32 ls = v_mul(l, s);
         v_float32 elem0 = v_select(lBelowHalfMask, ls, v_sub(s, ls));
 

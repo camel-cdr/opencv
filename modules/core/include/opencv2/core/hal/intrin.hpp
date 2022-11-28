@@ -697,6 +697,16 @@ namespace CV__SIMD_NAMESPACE {
 
 #if !CV_SIMD_SCALABLE
     // Compatibility layer
+    typedef v_uint8     v_uint8_b;
+    typedef v_int8      v_int8_b;
+    typedef v_uint16    v_uint16_b;
+    typedef v_int16     v_int16_b;
+    typedef v_int32     v_int32_b;
+    typedef v_uint32    v_uint32_b;
+    typedef v_float32   v_float32_b;
+    typedef v_int64     v_int64_b;
+    typedef v_uint64    v_uint64_b;
+    typedef v_float64   v_float64_b;
 
     template<typename T> struct VTraits {
         static inline int vlanes() { return T::nlanes; }
