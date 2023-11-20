@@ -728,6 +728,9 @@ namespace CV__SIMD_NAMESPACE {
     inline void vx_cleanup() { VXPREFIX(_cleanup)(); }
 
 #if !CV_SIMD_SCALABLE && !(CV_NEON && !defined(CV_FORCE_SIMD128_CPP))
+    #if CV_SIMD128_CPP
+    typedef v_float64x2 v_float64;
+    #endif
     // Compatibility layer
 
     template<typename T> struct VTraits {
@@ -774,8 +777,8 @@ namespace CV__SIMD_NAMESPACE {
     OPENCV_HAL_WRAP_BIN_OP_ADDSUB(v_int32)
     OPENCV_HAL_WRAP_BIN_OP_ADDSUB(v_int64)
     OPENCV_HAL_WRAP_BIN_OP_ADDSUB(v_float32)
-    #if CV_SIMD_64F
-    OPENCV_HAL_WRAP_BIN_OP_ADDSUB(v_float64)
+    #if CV_SIMD_64F || CV_SIMD128_CPP
+    OPENCV_HAL_WRAP_BIN_OP_ADDSUB(v_float64x2)
     #endif
     #if CV_SIMD_WIDTH != 16/*128*/ && CV_SIMD128
     // when we use CV_SIMD128 with 256/512 bit SIMD (e.g. AVX2 or AVX512)
@@ -857,7 +860,7 @@ namespace CV__SIMD_NAMESPACE {
     OPENCV_HAL_WRAP_NOT_OP(v_int16)
     OPENCV_HAL_WRAP_NOT_OP(v_int32)
     OPENCV_HAL_WRAP_NOT_OP(v_int64)
-    #if CV_SIMD_64F
+    #if CV_SIMD_64F || CV_SIMD128_CPP
     OPENCV_HAL_WRAP_BIN_OP_LOGIC(v_float64)
     #endif
     #if CV_SIMD_WIDTH != 16/*128*/ && CV_SIMD128
@@ -921,7 +924,7 @@ namespace CV__SIMD_NAMESPACE {
     OPENCV_HAL_WRAP_BIN_OP_MUL(v_int16)
     OPENCV_HAL_WRAP_BIN_OP_MUL(v_int32)
     OPENCV_HAL_WRAP_BIN_OP_MUL(v_float32)
-    #if CV_SIMD_64F
+    #if CV_SIMD_64F || CV_SIMD128_CPP
     OPENCV_HAL_WRAP_BIN_OP_MUL(v_float64)
     #endif
     #if CV_SIMD_WIDTH != 16/*128*/ && CV_SIMD128
@@ -955,7 +958,7 @@ namespace CV__SIMD_NAMESPACE {
         return a / b; \
     }
     OPENCV_HAL_WRAP_BIN_OP_DIV(v_float32)
-    #if CV_SIMD_64F
+    #if CV_SIMD_64F || CV_SIMD128_CPP
     OPENCV_HAL_WRAP_BIN_OP_DIV(v_float64)
     #endif
     #if CV_SIMD_WIDTH != 16/*128*/ && CV_SIMD128
@@ -1003,7 +1006,7 @@ namespace CV__SIMD_NAMESPACE {
     OPENCV_HAL_WRAP_CMP(v_int32)
     OPENCV_HAL_WRAP_EQ_OP(v_int64)
     OPENCV_HAL_WRAP_CMP(v_float32)
-    #if CV_SIMD_64F
+    #if CV_SIMD_64F || CV_SIMD128_CPP
     OPENCV_HAL_WRAP_CMP(v_float64)
     #endif
     #if CV_SIMD_WIDTH != 16/*128*/ && CV_SIMD128
@@ -1051,7 +1054,7 @@ namespace CV__SIMD_NAMESPACE {
     OPENCV_HAL_WRAP_GRT0(v_uint64)
     OPENCV_HAL_WRAP_GRT0(v_int64)
     OPENCV_HAL_WRAP_GRT0(v_float32)
-    #if CV_SIMD_64F
+    #if CV_SIMD_64F || CV_SIMD128_CPP
     OPENCV_HAL_WRAP_GRT0(v_float64)
     #endif
     #if CV_SIMD_WIDTH != 16/*128*/ && CV_SIMD128
@@ -1098,7 +1101,7 @@ namespace CV__SIMD_NAMESPACE {
     OPENCV_HAL_WRAP_EXTRACT(v_uint64)
     OPENCV_HAL_WRAP_EXTRACT(v_int64)
     OPENCV_HAL_WRAP_EXTRACT(v_float32)
-    #if CV_SIMD_64F
+    #if CV_SIMD_64F || CV_SIMD128_CPP
     OPENCV_HAL_WRAP_EXTRACT(v_float64)
     #endif
     #if CV_SIMD_WIDTH != 16/*128*/ && CV_SIMD128
