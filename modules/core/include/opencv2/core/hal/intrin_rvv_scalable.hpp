@@ -62,55 +62,55 @@ struct VTraits<REG> \
 { \
     static inline int vlanes() { return __riscv_vsetvlmax_##SUF(); } \
     using lane_type = TYP; \
-    static const int max_nlanes = CV_RVV_MAX_VLEN/SZ; \
+    static const int max_nlanes = CV_RVV_MAX_VLEN/(SZ); \
 };
 
-OPENCV_HAL_IMPL_RVV_TRAITS(vint8m1_t, int8_t, e8m1, 8)
-OPENCV_HAL_IMPL_RVV_TRAITS(vint8m2_t, int8_t, e8m2, 8)
-OPENCV_HAL_IMPL_RVV_TRAITS(vint8m4_t, int8_t, e8m4, 8)
-OPENCV_HAL_IMPL_RVV_TRAITS(vint8m8_t, int8_t, e8m8, 8)
-OPENCV_HAL_IMPL_RVV_TRAITS(vuint8m1_t, uint8_t, e8m1, 8)
-OPENCV_HAL_IMPL_RVV_TRAITS(vuint8m2_t, uint8_t, e8m2, 8)
-OPENCV_HAL_IMPL_RVV_TRAITS(vuint8m4_t, uint8_t, e8m4, 8)
-OPENCV_HAL_IMPL_RVV_TRAITS(vuint8m8_t, uint8_t, e8m8, 8)
+OPENCV_HAL_IMPL_RVV_TRAITS(vint8m1_t, int8_t, e8m1, 8/1)
+OPENCV_HAL_IMPL_RVV_TRAITS(vint8m2_t, int8_t, e8m2, 8/2)
+OPENCV_HAL_IMPL_RVV_TRAITS(vint8m4_t, int8_t, e8m4, 8/4)
+OPENCV_HAL_IMPL_RVV_TRAITS(vint8m8_t, int8_t, e8m8, 8/8)
+OPENCV_HAL_IMPL_RVV_TRAITS(vuint8m1_t, uint8_t, e8m1, 8/1)
+OPENCV_HAL_IMPL_RVV_TRAITS(vuint8m2_t, uint8_t, e8m2, 8/2)
+OPENCV_HAL_IMPL_RVV_TRAITS(vuint8m4_t, uint8_t, e8m4, 8/4)
+OPENCV_HAL_IMPL_RVV_TRAITS(vuint8m8_t, uint8_t, e8m8, 8/8)
 
-OPENCV_HAL_IMPL_RVV_TRAITS(vint16m1_t, int16_t, e16m1, 16)
-OPENCV_HAL_IMPL_RVV_TRAITS(vint16m2_t, int16_t, e16m2, 16)
-OPENCV_HAL_IMPL_RVV_TRAITS(vint16m4_t, int16_t, e16m4, 16)
-OPENCV_HAL_IMPL_RVV_TRAITS(vint16m8_t, int16_t, e16m8, 16)
-OPENCV_HAL_IMPL_RVV_TRAITS(vuint16m1_t, uint16_t, e16m1, 16)
-OPENCV_HAL_IMPL_RVV_TRAITS(vuint16m2_t, uint16_t, e16m2, 16)
-OPENCV_HAL_IMPL_RVV_TRAITS(vuint16m4_t, uint16_t, e16m4, 16)
-OPENCV_HAL_IMPL_RVV_TRAITS(vuint16m8_t, uint16_t, e16m8, 16)
+OPENCV_HAL_IMPL_RVV_TRAITS(vint16m1_t, int16_t, e16m1, 16/1)
+OPENCV_HAL_IMPL_RVV_TRAITS(vint16m2_t, int16_t, e16m2, 16/2)
+OPENCV_HAL_IMPL_RVV_TRAITS(vint16m4_t, int16_t, e16m4, 16/4)
+OPENCV_HAL_IMPL_RVV_TRAITS(vint16m8_t, int16_t, e16m8, 16/8)
+OPENCV_HAL_IMPL_RVV_TRAITS(vuint16m1_t, uint16_t, e16m1, 16/1)
+OPENCV_HAL_IMPL_RVV_TRAITS(vuint16m2_t, uint16_t, e16m2, 16/2)
+OPENCV_HAL_IMPL_RVV_TRAITS(vuint16m4_t, uint16_t, e16m4, 16/4)
+OPENCV_HAL_IMPL_RVV_TRAITS(vuint16m8_t, uint16_t, e16m8, 16/8)
 
-OPENCV_HAL_IMPL_RVV_TRAITS(vint32m1_t, int32_t, e32m1, 32)
-OPENCV_HAL_IMPL_RVV_TRAITS(vint32m2_t, int32_t, e32m2, 32)
-OPENCV_HAL_IMPL_RVV_TRAITS(vint32m4_t, int32_t, e32m4, 32)
-OPENCV_HAL_IMPL_RVV_TRAITS(vint32m8_t, int32_t, e32m8, 32)
-OPENCV_HAL_IMPL_RVV_TRAITS(vuint32m1_t, uint32_t, e32m1, 32)
-OPENCV_HAL_IMPL_RVV_TRAITS(vuint32m2_t, uint32_t, e32m2, 32)
-OPENCV_HAL_IMPL_RVV_TRAITS(vuint32m4_t, uint32_t, e32m4, 32)
-OPENCV_HAL_IMPL_RVV_TRAITS(vuint32m8_t, uint32_t, e32m8, 32)
+OPENCV_HAL_IMPL_RVV_TRAITS(vint32m1_t, int32_t, e32m1, 32/1)
+OPENCV_HAL_IMPL_RVV_TRAITS(vint32m2_t, int32_t, e32m2, 32/2)
+OPENCV_HAL_IMPL_RVV_TRAITS(vint32m4_t, int32_t, e32m4, 32/4)
+OPENCV_HAL_IMPL_RVV_TRAITS(vint32m8_t, int32_t, e32m8, 32/8)
+OPENCV_HAL_IMPL_RVV_TRAITS(vuint32m1_t, uint32_t, e32m1, 32/1)
+OPENCV_HAL_IMPL_RVV_TRAITS(vuint32m2_t, uint32_t, e32m2, 32/2)
+OPENCV_HAL_IMPL_RVV_TRAITS(vuint32m4_t, uint32_t, e32m4, 32/4)
+OPENCV_HAL_IMPL_RVV_TRAITS(vuint32m8_t, uint32_t, e32m8, 32/8)
 
-OPENCV_HAL_IMPL_RVV_TRAITS(vint64m1_t, int64_t, e64m1, 64)
-OPENCV_HAL_IMPL_RVV_TRAITS(vint64m2_t, int64_t, e64m2, 64)
-OPENCV_HAL_IMPL_RVV_TRAITS(vint64m4_t, int64_t, e64m4, 64)
-OPENCV_HAL_IMPL_RVV_TRAITS(vint64m8_t, int64_t, e64m8, 64)
-OPENCV_HAL_IMPL_RVV_TRAITS(vuint64m1_t, uint64_t, e64m1, 64)
-OPENCV_HAL_IMPL_RVV_TRAITS(vuint64m2_t, uint64_t, e64m2, 64)
-OPENCV_HAL_IMPL_RVV_TRAITS(vuint64m4_t, uint64_t, e64m4, 64)
-OPENCV_HAL_IMPL_RVV_TRAITS(vuint64m8_t, uint64_t, e64m8, 64)
+OPENCV_HAL_IMPL_RVV_TRAITS(vint64m1_t, int64_t, e64m1, 64/1)
+OPENCV_HAL_IMPL_RVV_TRAITS(vint64m2_t, int64_t, e64m2, 64/2)
+OPENCV_HAL_IMPL_RVV_TRAITS(vint64m4_t, int64_t, e64m4, 64/4)
+OPENCV_HAL_IMPL_RVV_TRAITS(vint64m8_t, int64_t, e64m8, 64/8)
+OPENCV_HAL_IMPL_RVV_TRAITS(vuint64m1_t, uint64_t, e64m1, 64/1)
+OPENCV_HAL_IMPL_RVV_TRAITS(vuint64m2_t, uint64_t, e64m2, 64/2)
+OPENCV_HAL_IMPL_RVV_TRAITS(vuint64m4_t, uint64_t, e64m4, 64/4)
+OPENCV_HAL_IMPL_RVV_TRAITS(vuint64m8_t, uint64_t, e64m8, 64/8)
 
-OPENCV_HAL_IMPL_RVV_TRAITS(vfloat32m1_t, float, e32m1, 32)
-OPENCV_HAL_IMPL_RVV_TRAITS(vfloat32m2_t, float, e32m2, 32)
-OPENCV_HAL_IMPL_RVV_TRAITS(vfloat32m4_t, float, e32m4, 32)
-OPENCV_HAL_IMPL_RVV_TRAITS(vfloat32m8_t, float, e32m8, 32)
+OPENCV_HAL_IMPL_RVV_TRAITS(vfloat32m1_t, float, e32m1, 32/1)
+OPENCV_HAL_IMPL_RVV_TRAITS(vfloat32m2_t, float, e32m2, 32/2)
+OPENCV_HAL_IMPL_RVV_TRAITS(vfloat32m4_t, float, e32m4, 32/4)
+OPENCV_HAL_IMPL_RVV_TRAITS(vfloat32m8_t, float, e32m8, 32/8)
 
 #if CV_SIMD_SCALABLE_64F
-OPENCV_HAL_IMPL_RVV_TRAITS(vfloat64m1_t, double, e64m1, 64)
-OPENCV_HAL_IMPL_RVV_TRAITS(vfloat64m2_t, double, e64m2, 64)
-OPENCV_HAL_IMPL_RVV_TRAITS(vfloat64m4_t, double, e64m4, 64)
-OPENCV_HAL_IMPL_RVV_TRAITS(vfloat64m8_t, double, e64m8, 64)
+OPENCV_HAL_IMPL_RVV_TRAITS(vfloat64m1_t, double, e64m1, 64/1)
+OPENCV_HAL_IMPL_RVV_TRAITS(vfloat64m2_t, double, e64m2, 64/2)
+OPENCV_HAL_IMPL_RVV_TRAITS(vfloat64m4_t, double, e64m4, 64/4)
+OPENCV_HAL_IMPL_RVV_TRAITS(vfloat64m8_t, double, e64m8, 64/8)
 #endif
 
 
@@ -848,34 +848,23 @@ OPENCV_HAL_IMPL_RVV_BIN_FUNC(v_float64, v_max, __riscv_vfmax, VTraits<v_float64>
 #endif
 
 ////////////// Transpose4x4 //////////////
-#define OPENCV_HAL_IMPL_RVV_ZIP4(_Tpvec, _wTpvec, suffix, convert2u, convert) \
-inline void v_zip4(const _Tpvec& a0, const _Tpvec& a1, _Tpvec& b0, _Tpvec& b1) { \
-    int vl = 4; \
-    _wTpvec temp = __riscv_vreinterpret_##suffix##m4(convert2u( \
-        __riscv_vor(__riscv_vzext_vf2(convert(a0), vl), \
-            __riscv_vreinterpret_u64m4(__riscv_vslide1up(__riscv_vreinterpret_u32m4(__riscv_vzext_vf2(convert(a1), vl)), 0, vl*2)), \
-            vl))); \
-    b0 = __riscv_vget_##suffix##m2(temp, 0); \
-    b1 = __riscv_vget_##suffix##m2(__riscv_vrgather(temp, __riscv_vadd(__riscv_vid_v_u32m4(vl), 4, vl)/*{4,5,6,7} */, vl) ,0); \
-}
-
-OPENCV_HAL_IMPL_RVV_ZIP4(v_uint32, vuint32m4_t, u32, OPENCV_HAL_NOP, OPENCV_HAL_NOP)
-OPENCV_HAL_IMPL_RVV_ZIP4(v_int32, vint32m4_t, i32, __riscv_vreinterpret_u32m4, __riscv_vreinterpret_u32m2)
-OPENCV_HAL_IMPL_RVV_ZIP4(v_float32, vfloat32m4_t, f32, __riscv_vreinterpret_u32m4, __riscv_vreinterpret_u32m2)
-
-
-#define OPENCV_HAL_IMPL_RVV_TRANSPOSE4x4(_Tpvec, suffix) \
+#define OPENCV_HAL_IMPL_RVV_TRANSPOSE4x4(_Tpvec, conver2u, convert) \
 inline void v_transpose4x4(const _Tpvec& a0, const _Tpvec& a1, const _Tpvec& a2, const _Tpvec& a3, _Tpvec& b0, _Tpvec& b1, _Tpvec& b2, _Tpvec& b3) { \
-    _Tpvec t0,t1,t2,t3; \
-    v_zip4(a0, a2, t0, t2); \
-    v_zip4(a1, a3, t1, t3); \
-    v_zip4(t0, t1, b0, b1); \
-    v_zip4(t2, t3, b2, b3); \
+    uint32_t buf[16]; \
+    __riscv_vse32(buf,    __riscv_vlmul_trunc_u32m1(conver2u(a0)), 4); \
+    __riscv_vse32(buf+4,  __riscv_vlmul_trunc_u32m1(conver2u(a1)), 4); \
+    __riscv_vse32(buf+8,  __riscv_vlmul_trunc_u32m1(conver2u(a2)), 4); \
+    __riscv_vse32(buf+12, __riscv_vlmul_trunc_u32m1(conver2u(a3)), 4); \
+    vuint32m1x4_t v = __riscv_vlseg4e32_v_u32m1x4(buf, 4); \
+    b0 = convert(__riscv_vlmul_ext_u32m2(__riscv_vget_u32m1(v, 0))); \
+    b1 = convert(__riscv_vlmul_ext_u32m2(__riscv_vget_u32m1(v, 1))); \
+    b2 = convert(__riscv_vlmul_ext_u32m2(__riscv_vget_u32m1(v, 2))); \
+    b3 = convert(__riscv_vlmul_ext_u32m2(__riscv_vget_u32m1(v, 3))); \
 }
 
-OPENCV_HAL_IMPL_RVV_TRANSPOSE4x4(v_uint32, u32)
-OPENCV_HAL_IMPL_RVV_TRANSPOSE4x4(v_int32, i32)
-OPENCV_HAL_IMPL_RVV_TRANSPOSE4x4(v_float32, f32)
+OPENCV_HAL_IMPL_RVV_TRANSPOSE4x4(v_uint32, OPENCV_HAL_NOP, OPENCV_HAL_NOP)
+OPENCV_HAL_IMPL_RVV_TRANSPOSE4x4(v_int32, __riscv_vreinterpret_u32m2, __riscv_vreinterpret_i32m2)
+OPENCV_HAL_IMPL_RVV_TRANSPOSE4x4(v_float32, __riscv_vreinterpret_u32m2, __riscv_vreinterpret_f32m2)
 
 ////////////// Reduce //////////////
 
@@ -942,52 +931,21 @@ OPENCV_HAL_IMPL_RVV_REDUCE_FP(v_float32,  vfloat32m1_t, max, float, f32, VTraits
 inline v_float32 v_reduce_sum4(const v_float32& a, const v_float32& b,
                                  const v_float32& c, const v_float32& d)
 {
-    // 0000 1111 2222 3333 ....
-    vuint64m4_t vid1 = __riscv_vid_v_u64m4(VTraits<vuint32m2_t>::vlanes());
-    vuint16m4_t t1 = __riscv_vreinterpret_u16m4(vid1);
-    vuint16m4_t t2 = __riscv_vslide1up(t1, 0, VTraits<vuint8m2_t>::vlanes());
-    vuint16m4_t t3 = __riscv_vslide1up(t2, 0, VTraits<vuint8m2_t>::vlanes());
-    vuint16m4_t t4 = __riscv_vslide1up(t3, 0, VTraits<vuint8m2_t>::vlanes());
-    t1 = __riscv_vor(
-        __riscv_vor(t1, t2, VTraits<vuint8m2_t>::vlanes()),
-        __riscv_vor(t3, t4, VTraits<vuint8m2_t>::vlanes()),
-        VTraits<vuint8m2_t>::vlanes()
-    );
-
-    // index for transpose4X4
-    vuint16m4_t vidx0 = __riscv_vmul(t1, 12, VTraits<vuint8m2_t>::vlanes());
-    vidx0 = __riscv_vadd(vidx0, __riscv_vid_v_u16m4(VTraits<vuint8m2_t>::vlanes()), VTraits<vuint8m2_t>::vlanes());
-    vuint16m4_t vidx1 = __riscv_vadd(vidx0, 4, VTraits<vuint8m2_t>::vlanes());
-    vuint16m4_t vidx2 = __riscv_vadd(vidx0, 8, VTraits<vuint8m2_t>::vlanes());
-    vuint16m4_t vidx3 = __riscv_vadd(vidx0, 12, VTraits<vuint8m2_t>::vlanes());
-
-    // zip
-    vuint32m4_t tempA = __riscv_vreinterpret_u32m4( \
-        __riscv_vor(__riscv_vzext_vf2(__riscv_vreinterpret_u32m2(a), VTraits<vuint16m2_t>::vlanes()), \
-            __riscv_vreinterpret_u64m4(__riscv_vslide1up(__riscv_vreinterpret_u32m4(__riscv_vzext_vf2(__riscv_vreinterpret_u32m2(c), VTraits<vuint16m2_t>::vlanes())), 0, VTraits<vuint16m2_t>::vlanes())), \
-            VTraits<vuint32m2_t>::vlanes())); \
-    vuint32m4_t tempB = __riscv_vreinterpret_u32m4( \
-        __riscv_vor(__riscv_vzext_vf2(__riscv_vreinterpret_u32m2(b), VTraits<vuint16m2_t>::vlanes()), \
-            __riscv_vreinterpret_u64m4(__riscv_vslide1up(__riscv_vreinterpret_u32m4(__riscv_vzext_vf2(__riscv_vreinterpret_u32m2(d), VTraits<vuint16m2_t>::vlanes())), 0, VTraits<vuint16m2_t>::vlanes())), \
-            VTraits<vuint32m2_t>::vlanes())); \
-    vfloat32m8_t temp = __riscv_vreinterpret_f32m8(__riscv_vreinterpret_u32m8( \
-        __riscv_vor(__riscv_vzext_vf2(tempA, VTraits<vuint8m2_t>::vlanes()), \
-            __riscv_vreinterpret_u64m8(__riscv_vslide1up(__riscv_vreinterpret_u32m8(__riscv_vzext_vf2(tempB, VTraits<vuint8m2_t>::vlanes())), 0, VTraits<vuint8m2_t>::vlanes())), \
-            VTraits<vuint16m2_t>::vlanes())));
-
-    // transpose
-    vfloat32m2_t b0 = __riscv_vlmul_trunc_f32m2(__riscv_vrgatherei16(temp, vidx0, VTraits<vuint8m2_t>::vlanes()));
-    vfloat32m2_t b1 = __riscv_vlmul_trunc_f32m2(__riscv_vrgatherei16(temp, vidx1, VTraits<vuint8m2_t>::vlanes()));
-    vfloat32m2_t b2 = __riscv_vlmul_trunc_f32m2(__riscv_vrgatherei16(temp, vidx2, VTraits<vuint8m2_t>::vlanes()));
-    vfloat32m2_t b3 = __riscv_vlmul_trunc_f32m2(__riscv_vrgatherei16(temp, vidx3, VTraits<vuint8m2_t>::vlanes()));
-
-    // vector add
-    v_float32 res = __riscv_vfadd(
-        __riscv_vfadd(b0, b1, VTraits<vfloat32m2_t>::vlanes()),
-        __riscv_vfadd(b2, b3, VTraits<vfloat32m2_t>::vlanes()),
-        VTraits<vfloat32m2_t>::vlanes()
-    );
-    return res;
+    vuint64m8_t v = __riscv_vreinterpret_u64m8(__riscv_vreinterpret_u32m8(
+            __riscv_vcreate_v_f32m2_f32m8(a, b, c, d)));
+    size_t vl = __riscv_vsetvlmax_e64m8();
+    vfloat32m4_t v0 = __riscv_vreinterpret_f32m4(__riscv_vnsrl(v, 0, vl));
+    vfloat32m4_t v1 = __riscv_vreinterpret_f32m4(__riscv_vnsrl(v, 32, vl));
+    vuint64m4_t v01 = __riscv_vreinterpret_u64m4(__riscv_vreinterpret_u32m4(
+            __riscv_vfadd(v0, v1, vl)));
+    vl = __riscv_vsetvlmax_e64m4();
+    vfloat32m2_t v2 = __riscv_vreinterpret_f32m2(__riscv_vnsrl(v01, 0, vl));
+    vfloat32m2_t v3 = __riscv_vreinterpret_f32m2(__riscv_vnsrl(v01, 32, vl));
+    vfloat32m2_t res = __riscv_vfadd(v2, v3, vl);
+    vuint16m1_t vidx = __riscv_vid_v_u16m1(vl);
+    vidx = __riscv_vadd(__riscv_vand(__riscv_vmul(vidx, vl/4, vl), vl-1, vl),
+                        __riscv_vsrl(vidx, 2, vl), vl);
+    return __riscv_vrgatherei16(res, vidx, vl);
 }
 
 ////////////// Square-Root //////////////
@@ -1160,9 +1118,13 @@ inline _Tprvec v_abs(const _Tpvec& a) \
 OPENCV_HAL_IMPL_RVV_ABS(v_uint8, v_int8, s8)
 OPENCV_HAL_IMPL_RVV_ABS(v_uint16, v_int16, s16)
 OPENCV_HAL_IMPL_RVV_ABS(v_uint32, v_int32, s32)
-OPENCV_HAL_IMPL_RVV_ABS(v_float32, v_float32, f32)
+inline v_float32 v_abs(const v_float32& a) {
+    return __riscv_vfabs(a, VTraits<v_float32>::vlanes());
+}
 #if CV_SIMD_SCALABLE_64F
-OPENCV_HAL_IMPL_RVV_ABS(v_float64, v_float64, f64)
+inline v_float64 v_abs(const v_float64& a) {
+    return __riscv_vfabs(a, VTraits<v_float64>::vlanes());
+}
 #endif
 
 
@@ -1328,23 +1290,26 @@ OPENCV_HAL_IMPL_RVV_BROADCAST(v_float32, f32)
 
 
 ////////////// Reverse //////////////
-#define OPENCV_HAL_IMPL_RVV_REVERSE(_Tpvec, width) \
+#define OPENCV_HAL_IMPL_RVV_REVERSE(_Tpvec, T, width) \
 inline _Tpvec v_reverse(const _Tpvec& a)  \
 { \
-    vuint##width##m2_t vidx = __riscv_vrsub(__riscv_vid_v_u##width##m2(VTraits<_Tpvec>::vlanes()), VTraits<_Tpvec>::vlanes()-1, VTraits<_Tpvec>::vlanes()); \
-    return __riscv_vrgather(a, vidx, VTraits<_Tpvec>::vlanes()); \
+    size_t vl = VTraits<_Tpvec>::vlanes()/2; \
+    vuint##width##m1_t vidx = __riscv_vrsub(__riscv_vid_v_u##width##m1(vl), vl-1, vl); \
+    return __riscv_vcreate_v_##T##width##m1_##T##width##m2( \
+            __riscv_vrgather(__riscv_vget_##T##width##m1(a, 1), vidx, vl), \
+            __riscv_vrgather(__riscv_vget_##T##width##m1(a, 0), vidx, vl)); \
 }
-OPENCV_HAL_IMPL_RVV_REVERSE(v_uint8, 8)
-OPENCV_HAL_IMPL_RVV_REVERSE(v_int8, 8)
-OPENCV_HAL_IMPL_RVV_REVERSE(v_uint16, 16)
-OPENCV_HAL_IMPL_RVV_REVERSE(v_int16, 16)
-OPENCV_HAL_IMPL_RVV_REVERSE(v_uint32, 32)
-OPENCV_HAL_IMPL_RVV_REVERSE(v_int32, 32)
-OPENCV_HAL_IMPL_RVV_REVERSE(v_float32, 32)
-OPENCV_HAL_IMPL_RVV_REVERSE(v_uint64, 64)
-OPENCV_HAL_IMPL_RVV_REVERSE(v_int64, 64)
+OPENCV_HAL_IMPL_RVV_REVERSE(v_uint8,  u, 8)
+OPENCV_HAL_IMPL_RVV_REVERSE(v_int8,   i, 8)
+OPENCV_HAL_IMPL_RVV_REVERSE(v_uint16, u, 16)
+OPENCV_HAL_IMPL_RVV_REVERSE(v_int16,  i, 16)
+OPENCV_HAL_IMPL_RVV_REVERSE(v_uint32, u, 32)
+OPENCV_HAL_IMPL_RVV_REVERSE(v_int32,  i, 32)
+OPENCV_HAL_IMPL_RVV_REVERSE(v_float32,f, 32)
+OPENCV_HAL_IMPL_RVV_REVERSE(v_uint64, u, 64)
+OPENCV_HAL_IMPL_RVV_REVERSE(v_int64,  i, 64)
 #if CV_SIMD_SCALABLE_64F
-OPENCV_HAL_IMPL_RVV_REVERSE(v_float64, 64)
+OPENCV_HAL_IMPL_RVV_REVERSE(v_float64, f, 64)
 #endif
 
 //////////// Value reordering ////////////
@@ -1468,10 +1433,9 @@ OPENCV_HAL_IMPL_RVV_PACK_U(v_uint16, ushort, v_int32, int, 16, 32, u16, i32,  __
 
 #define OPENCV_HAL_IMPL_RVV_ZIP(_Tpvec, _wTpvec, suffix, width, width2, convert2um2, convert2um1) \
 inline void v_zip(const _Tpvec& a0, const _Tpvec& a1, _Tpvec& b0, _Tpvec& b1) { \
+    size_t vl = VTraits<_Tpvec>::vlanes(); \
     _wTpvec temp = __riscv_vreinterpret_##suffix##m4(convert2um2( \
-        __riscv_vor(__riscv_vzext_vf2(convert2um1(a0), VTraits<_Tpvec>::vlanes()*2), \
-            __riscv_vreinterpret_u##width2##m4(__riscv_vslide1up(__riscv_vreinterpret_u##width##m4(__riscv_vzext_vf2(convert2um1(a1), VTraits<_Tpvec>::vlanes()*2)), 0, VTraits<_Tpvec>::vlanes()*2)), \
-            VTraits<_Tpvec>::vlanes()))); \
+            __riscv_vwmaccu(__riscv_vwaddu_vv(convert2um1(a0), convert2um1(a1), vl), (uint##width##_t)-1ull, convert2um1(a1), vl))); \
     b0 = __riscv_vget_##suffix##m2(temp, 0); \
     b1 = __riscv_vget_##suffix##m2(temp, 1); \
 }
@@ -1491,12 +1455,7 @@ inline void v_zip(const v_float64& a0, const v_float64& a1, v_float64& b0, v_flo
         __riscv_vor(__riscv_vzext_vf2(idx0, VTraits<v_float64>::vlanes()), \
             __riscv_vreinterpret_u32m1(__riscv_vslide1up(__riscv_vreinterpret_u16m1(__riscv_vzext_vf2(idx1, VTraits<v_float64>::vlanes())), 0, VTraits<v_uint32>::vlanes())), \
             VTraits<v_uint32>::vlanes())));
-#if 0
     vfloat64m4_t temp = __riscv_vcreate_v_f64m2_f64m4(a0, a1);
-#else // TODO: clean up when RVV Intrinsic is frozen.
-    vfloat64m4_t temp = __riscv_vlmul_ext_f64m4(a0);
-    temp = __riscv_vset(temp, 1, a1);
-#endif
     temp = __riscv_vrgatherei16(temp, idx, VTraits<v_float64>::vlanes()*2);
     b0 = __riscv_vget_f64m2(temp, 0); \
     b1 = __riscv_vget_f64m2(temp, 1); \
@@ -1590,49 +1549,70 @@ OPENCV_HAL_IMPL_RVV_INTERLEAVED(int64, int64, i64, 64, 32, VTraits<v_int64>::vla
 OPENCV_HAL_IMPL_RVV_INTERLEAVED(float64, double, f64, 64, 32, VTraits<v_float64>::vlanes())
 #endif
 
-static uint64_t idx_interleave_pairs[] = { \
-    0x0705060403010200, 0x0f0d0e0c0b090a08, 0x1715161413111210, 0x1f1d1e1c1b191a18, \
-    0x2725262423212220, 0x2f2d2e2c2b292a28, 0x3735363433313230, 0x3f3d3e3c3b393a38, \
-    0x4745464443414240, 0x4f4d4e4c4b494a48, 0x5755565453515250, 0x5f5d5e5c5b595a58, \
-    0x6765666463616260, 0x6f6d6e6c6b696a68, 0x7775767473717270, 0x7f7d7e7c7b797a78};
 
-static uint64_t idx_interleave_quads[] = { \
-    0x0703060205010400, 0x0f0b0e0a0d090c08, 0x1713161215111410, 0x1f1b1e1a1d191c18, \
-    0x2723262225212420, 0x2f2b2e2a2d292c28, 0x3733363235313430, 0x3f3b3e3a3d393c38, \
-    0x4743464245414440, 0x4f4b4e4a4d494c48, 0x5753565255515450, 0x5f5b5e5a5d595c58, \
-    0x6763666265616460, 0x6f6b6e6a6d696c68, 0x7773767275717470, 0x7f7b7e7a7d797c78};
-
-#define OPENCV_HAL_IMPL_RVV_INTERLEAVED_PQ_NOEXPEND(_Tpvec, func) \
-inline _Tpvec v_interleave_##func(const _Tpvec& vec) { \
-    CV_CheckLE(VTraits<_Tpvec>::vlanes(), VTraits<_Tpvec>::max_nlanes, "RVV implementation only supports VLEN in the range [128, 1024]"); \
-    vuint8m2_t vidx = __riscv_vundefined_u8m2();\
-    vidx = __riscv_vreinterpret_u8m2(__riscv_vle64_v_u64m2(idx_interleave_##func, 16)); \
-    return __riscv_vrgather(vec, vidx, VTraits<v_uint8>::vlanes()); \
+inline v_uint8 v_interleave_pairs(const v_uint8& vec) {
+    CV_CheckLE(VTraits<vuint8m1_t>::vlanes(), VTraits<vuint8m1_t>::max_nlanes, "RVV implementation only supports VLEN in the range [128, 1024]");
+    size_t vl = VTraits<vuint8m1_t>::vlanes();
+    vuint8m1_t vidx = __riscv_vreinterpret_u8m1(__riscv_vsub(
+                __riscv_vreinterpret_u32m1(__riscv_vid_v_u8m1(vl)), 0x10000-0x100, vl/4));
+    return __riscv_vcreate_v_u8m1_u8m2(
+            __riscv_vrgather(__riscv_vget_u8m1(vec, 0), vidx, vl),
+            __riscv_vrgather(__riscv_vget_u8m1(vec, 1), vidx, vl));
 }
-OPENCV_HAL_IMPL_RVV_INTERLEAVED_PQ_NOEXPEND(v_uint8, pairs)
-OPENCV_HAL_IMPL_RVV_INTERLEAVED_PQ_NOEXPEND(v_int8, pairs)
-OPENCV_HAL_IMPL_RVV_INTERLEAVED_PQ_NOEXPEND(v_uint8, quads)
-OPENCV_HAL_IMPL_RVV_INTERLEAVED_PQ_NOEXPEND(v_int8, quads)
+inline v_int8 v_interleave_pairs(const v_int8& vec) { return __riscv_vreinterpret_i8m2(v_interleave_pairs(__riscv_vreinterpret_u8m2(vec))); }
 
-#define OPENCV_HAL_IMPL_RVV_INTERLEAVED_PQ(_Tpvec, width, vzext_vfx, func) \
-inline _Tpvec v_interleave_##func(const _Tpvec& vec) { \
-    CV_CheckLE(VTraits<_Tpvec>::vlanes(), VTraits<_Tpvec>::max_nlanes, "RVV implementation only supports VLEN in the range [128, 1024]"); \
-    vuint##width##m2_t vidx = __riscv_vundefined_u##width##m2();\
-    vidx = __riscv_vget_u##width##m2(vzext_vfx(__riscv_vreinterpret_u8m2(__riscv_vle64_v_u64m2(idx_interleave_##func, 16)), VTraits<v_uint8>::vlanes()), 0); \
-    return __riscv_vrgather(vec, vidx, VTraits<_Tpvec>::vlanes()); \
+inline v_uint16 v_interleave_pairs(const v_uint16& vec) {
+    size_t vl = VTraits<vuint16m1_t>::vlanes();
+    vuint16m1_t vidx = __riscv_vreinterpret_u16m1(__riscv_vsub(
+                __riscv_vreinterpret_u64m1(__riscv_vid_v_u16m1(vl)),0x100000000-0x10000, vl));
+    return __riscv_vcreate_v_u16m1_u16m2(
+            __riscv_vrgatherei16(__riscv_vget_u16m1(vec, 0), vidx, vl),
+            __riscv_vrgatherei16(__riscv_vget_u16m1(vec, 1), vidx, vl));
 }
+inline v_int16 v_interleave_pairs(const v_int16& vec) { return __riscv_vreinterpret_i16m2(v_interleave_pairs(__riscv_vreinterpret_u16m2(vec))); }
 
-OPENCV_HAL_IMPL_RVV_INTERLEAVED_PQ(v_uint16, 16, __riscv_vzext_vf2, pairs)
-OPENCV_HAL_IMPL_RVV_INTERLEAVED_PQ(v_int16, 16, __riscv_vzext_vf2, pairs)
-OPENCV_HAL_IMPL_RVV_INTERLEAVED_PQ(v_uint32, 32, __riscv_vzext_vf4, pairs)
-OPENCV_HAL_IMPL_RVV_INTERLEAVED_PQ(v_int32, 32, __riscv_vzext_vf4, pairs)
-OPENCV_HAL_IMPL_RVV_INTERLEAVED_PQ(v_float32, 32, __riscv_vzext_vf4, pairs)
+inline v_uint32 v_interleave_pairs(const v_uint32& vec) {
+    size_t vl = VTraits<vuint16m1_t>::vlanes();
+    vuint16mf2_t vidx = __riscv_vlmul_trunc_u16mf2(__riscv_vreinterpret_u16m1(__riscv_vsub(
+                __riscv_vreinterpret_u64m1(__riscv_vid_v_u16m1(vl)), 0x100000000-0x10000, (vl+7)/4)));
+    return __riscv_vcreate_v_u32m1_u32m2(
+            __riscv_vrgatherei16(__riscv_vget_u32m1(vec, 0), vidx, vl),
+            __riscv_vrgatherei16(__riscv_vget_u32m1(vec, 1), vidx, vl));
+}
+inline v_int32 v_interleave_pairs(const v_int32& vec) { return __riscv_vreinterpret_i32m2(v_interleave_pairs(__riscv_vreinterpret_u32m2(vec))); }
+inline v_float32 v_interleave_pairs(const v_float32& vec) { return __riscv_vreinterpret_f32m2(v_interleave_pairs(__riscv_vreinterpret_u32m2(vec))); }
 
-OPENCV_HAL_IMPL_RVV_INTERLEAVED_PQ(v_uint16, 16, __riscv_vzext_vf2, quads)
-OPENCV_HAL_IMPL_RVV_INTERLEAVED_PQ(v_int16, 16, __riscv_vzext_vf2, quads)
-OPENCV_HAL_IMPL_RVV_INTERLEAVED_PQ(v_uint32, 32, __riscv_vzext_vf4, quads)
-OPENCV_HAL_IMPL_RVV_INTERLEAVED_PQ(v_int32, 32, __riscv_vzext_vf4, quads)
-OPENCV_HAL_IMPL_RVV_INTERLEAVED_PQ(v_float32, 32, __riscv_vzext_vf4, quads)
+inline v_uint8 v_interleave_quads(const v_uint8& vec) {
+    CV_CheckLE(VTraits<vuint8m1_t>::vlanes(), VTraits<vuint8m1_t>::max_nlanes, "RVV implementation only supports VLEN in the range [128, 1024]");
+    size_t vl = VTraits<vuint8m1_t>::vlanes();
+    vuint8m1_t vidx = __riscv_vreinterpret_u8m1(__riscv_vsub(
+                __riscv_vreinterpret_u64m1(__riscv_vid_v_u8m1(vl)), 0x3000200010000-0x10002000300, vl/8));
+    return __riscv_vcreate_v_u8m1_u8m2(
+            __riscv_vrgather(__riscv_vget_u8m1(vec, 0), vidx, vl),
+            __riscv_vrgather(__riscv_vget_u8m1(vec, 1), vidx, vl));
+}
+inline v_int8 v_interleave_quads(const v_int8& vec) { return __riscv_vreinterpret_i8m2(v_interleave_quads(__riscv_vreinterpret_u8m2(vec))); }
+
+inline v_uint16 v_interleave_quads(const v_uint16& vec) {
+    size_t vl = VTraits<vuint16m1_t>::vlanes();
+    vuint16m1_t vidx = __riscv_vzext_vf2(__riscv_vlmul_trunc_u8mf2(__riscv_vreinterpret_u8m1(__riscv_vsub(
+                __riscv_vreinterpret_u64m1(__riscv_vid_v_u8m1(vl)), 0x3000200010000-0x10002000300, vl/8))), vl);
+    return __riscv_vcreate_v_u16m1_u16m2(
+            __riscv_vrgatherei16(__riscv_vget_u16m1(vec, 0), vidx, vl),
+            __riscv_vrgatherei16(__riscv_vget_u16m1(vec, 1), vidx, vl));
+}
+inline v_int16 v_interleave_quads(const v_int16& vec) { return __riscv_vreinterpret_i16m2(v_interleave_quads(__riscv_vreinterpret_u16m2(vec))); }
+
+inline v_uint32 v_interleave_quads(const v_uint32& vec) {
+    size_t vl = VTraits<vuint32m1_t>::vlanes();
+    vuint16mf2_t vidx = __riscv_vzext_vf2(__riscv_vlmul_trunc_u8mf4(__riscv_vreinterpret_u8m1(__riscv_vsub(
+                __riscv_vreinterpret_u64m1(__riscv_vid_v_u8m1(vl)), 0x3000200010000-0x10002000300, (vl+7)/8))), vl);
+    return __riscv_vcreate_v_u32m1_u32m2(
+            __riscv_vrgatherei16(__riscv_vget_u32m1(vec, 0), vidx, vl),
+            __riscv_vrgatherei16(__riscv_vget_u32m1(vec, 1), vidx, vl));
+}
+inline v_int32 v_interleave_quads(const v_int32& vec) { return __riscv_vreinterpret_i32m2(v_interleave_quads(__riscv_vreinterpret_u32m2(vec))); }
+inline v_float32 v_interleave_quads(const v_float32& vec) { return __riscv_vreinterpret_f32m2(v_interleave_quads(__riscv_vreinterpret_u32m2(vec))); }
 
 //////////// PopCount //////////
 static const unsigned char popCountTable[256] =
@@ -1654,22 +1634,20 @@ static const unsigned char popCountTable[256] =
     3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7,
     4, 5, 5, 6, 5, 6, 6, 7, 5, 6, 6, 7, 6, 7, 7, 8,
 };
-#define OPENCV_HAL_IMPL_RVV_HADD(_Tpvec, _Tpvec2, _Tm2, width, width2, suffix, add) \
-static inline _Tpvec2 v_hadd(_Tpvec a) { \
-    vuint##width2##m2_t oneX2 = __riscv_vmv_v_x_u##width2##m2(1, VTraits<v_uint##width2>::vlanes()); \
-    vuint##width##m2_t one = __riscv_vreinterpret_u##width##m2(oneX2); \
-    _Tm2 res = add(a, __riscv_vslide1down(a, 0, VTraits<v_uint##width>::vlanes()), VTraits<v_uint##width>::vlanes()); \
-    return __riscv_vget_##suffix##m2(__riscv_vcompress(res, __riscv_vmseq(one, 1, VTraits<v_uint##width>::vlanes()), VTraits<v_uint##width>::vlanes()), 0); \
-}
-OPENCV_HAL_IMPL_RVV_HADD(v_uint8, v_uint16, vuint16m4_t, 8, 16, u16, __riscv_vwaddu_vv)
-OPENCV_HAL_IMPL_RVV_HADD(v_uint16, v_uint32, vuint32m4_t, 16, 32, u32, __riscv_vwaddu_vv)
-OPENCV_HAL_IMPL_RVV_HADD(v_uint32, v_uint64, vuint64m4_t, 32, 64, u64, __riscv_vwaddu_vv)
-OPENCV_HAL_IMPL_RVV_HADD(v_int8, v_int16, vint16m4_t, 8, 16, i16, __riscv_vwadd_vv)
-OPENCV_HAL_IMPL_RVV_HADD(v_int16, v_int32, vint32m4_t, 16, 32, i32, __riscv_vwadd_vv)
-OPENCV_HAL_IMPL_RVV_HADD(v_int32, v_int64, vint64m4_t, 32, 64, i64, __riscv_vwadd_vv)
 
-OPENCV_HAL_IMPL_RVV_HADD(vint32m4_t, v_int32, vint32m4_t, 16, 32, i32, __riscv_vadd)
-OPENCV_HAL_IMPL_RVV_HADD(vint64m4_t, v_int64, vint64m4_t, 32, 64, i64, __riscv_vadd)
+#define OPENCV_HAL_IMPL_RVV_HADD(_Tpvec, _Tpvec2, _Tm1, width, suffix, nshift, add) \
+static inline _Tpvec2 v_hadd(_Tpvec a) { \
+    size_t vl = VTraits<_Tpvec2>::vlanes(); \
+    _Tm1 v0 = nshift(__riscv_vreinterpret_##suffix(a), 0, vl); \
+    _Tm1 v1 = nshift(__riscv_vreinterpret_##suffix(a), width, vl); \
+    return add(v0, v1, vl); \
+}
+OPENCV_HAL_IMPL_RVV_HADD(v_uint8,  v_uint16, vuint8m1_t,  8,  u16m2, __riscv_vnsrl, __riscv_vwaddu_vv)
+OPENCV_HAL_IMPL_RVV_HADD(v_uint16, v_uint32, vuint16m1_t, 16, u32m2, __riscv_vnsrl, __riscv_vwaddu_vv)
+OPENCV_HAL_IMPL_RVV_HADD(v_uint32, v_uint64, vuint32m1_t, 32, u64m2, __riscv_vnsrl, __riscv_vwaddu_vv)
+OPENCV_HAL_IMPL_RVV_HADD(v_int8,   v_int16,  vint8m1_t,   8,  i16m2, __riscv_vnsra, __riscv_vwadd_vv)
+OPENCV_HAL_IMPL_RVV_HADD(v_int16,  v_int32,  vint16m1_t,  16, i32m2, __riscv_vnsra, __riscv_vwadd_vv)
+OPENCV_HAL_IMPL_RVV_HADD(v_int32,  v_int64,  vint32m1_t,  32, i64m2, __riscv_vnsra, __riscv_vwadd_vv)
 
 inline v_uint8 v_popcount(const v_uint8& a)
 {
@@ -1759,26 +1737,24 @@ inline int v_scan_forward(const v_float64& a)
 //////////// Pack triplets ////////////
 // {A0, A1, A2, A3, B0, B1, B2, B3, C0 ...} --> {A0, A1, A2, B0, B1, B2, C0 ...}
 // mask: {0,0,0,1, ...} -> {T,T,T,F, ...}
-#define OPENCV_HAL_IMPL_RVV_PACK_TRIPLETS(_Tpvec, v_trunc) \
+#define OPENCV_HAL_IMPL_RVV_PACK_TRIPLETS(_Tpvec, maskSize) \
 inline _Tpvec v_pack_triplets(const _Tpvec& vec) { \
-    size_t vl = VTraits<v_uint8>::vlanes(); \
-    vuint32m2_t one = __riscv_vmv_v_x_u32m2(1, VTraits<v_uint32>::vlanes()); \
-    vuint8m2_t zero = __riscv_vmv_v_x_u8m2(0, vl); \
-    vuint8m2_t mask = __riscv_vreinterpret_u8m2(one); \
-    return __riscv_vcompress(vec, __riscv_vmseq(v_trunc(__riscv_vslideup(zero, mask, 3, vl)), 0, vl), VTraits<_Tpvec>::vlanes()); \
+    vbool##maskSize##_t mask = __riscv_vreinterpret_b##maskSize( \
+            __riscv_vmv_v_x_u8m1(0b01110111, __riscv_vsetvlmax_e8m1())); \
+    return __riscv_vcompress(vec, mask, VTraits<_Tpvec>::vlanes()); \
 }
 
-OPENCV_HAL_IMPL_RVV_PACK_TRIPLETS(v_uint8, OPENCV_HAL_NOP)
-OPENCV_HAL_IMPL_RVV_PACK_TRIPLETS(v_int8, OPENCV_HAL_NOP)
-OPENCV_HAL_IMPL_RVV_PACK_TRIPLETS(v_uint16, __riscv_vlmul_trunc_u8m1)
-OPENCV_HAL_IMPL_RVV_PACK_TRIPLETS(v_int16, __riscv_vlmul_trunc_u8m1)
-OPENCV_HAL_IMPL_RVV_PACK_TRIPLETS(v_uint32, __riscv_vlmul_trunc_u8mf2)
-OPENCV_HAL_IMPL_RVV_PACK_TRIPLETS(v_int32, __riscv_vlmul_trunc_u8mf2)
-OPENCV_HAL_IMPL_RVV_PACK_TRIPLETS(v_float32, __riscv_vlmul_trunc_u8mf2)
-OPENCV_HAL_IMPL_RVV_PACK_TRIPLETS(v_uint64, __riscv_vlmul_trunc_u8mf4)
-OPENCV_HAL_IMPL_RVV_PACK_TRIPLETS(v_int64, __riscv_vlmul_trunc_u8mf4)
+OPENCV_HAL_IMPL_RVV_PACK_TRIPLETS(v_uint8,   4)
+OPENCV_HAL_IMPL_RVV_PACK_TRIPLETS(v_int8,    4)
+OPENCV_HAL_IMPL_RVV_PACK_TRIPLETS(v_uint16,  8)
+OPENCV_HAL_IMPL_RVV_PACK_TRIPLETS(v_int16,   8)
+OPENCV_HAL_IMPL_RVV_PACK_TRIPLETS(v_uint32,  16)
+OPENCV_HAL_IMPL_RVV_PACK_TRIPLETS(v_int32,   16)
+OPENCV_HAL_IMPL_RVV_PACK_TRIPLETS(v_float32, 16)
+OPENCV_HAL_IMPL_RVV_PACK_TRIPLETS(v_uint64,  32)
+OPENCV_HAL_IMPL_RVV_PACK_TRIPLETS(v_int64,   32)
 #if CV_SIMD_SCALABLE_64F
-OPENCV_HAL_IMPL_RVV_PACK_TRIPLETS(v_float64, __riscv_vlmul_trunc_u8mf4)
+OPENCV_HAL_IMPL_RVV_PACK_TRIPLETS(v_float64, 32)
 #endif
 
 
@@ -1865,133 +1841,89 @@ inline v_int32 v_trunc(const v_float64& a)
 // 16 >> 32
 inline v_int32 v_dotprod(const v_int16& a, const v_int16& b)
 {
-    vint32m4_t temp1 = __riscv_vwmul(a, b, VTraits<v_int16>::vlanes());
-    return v_hadd(temp1);
+    size_t vl = VTraits<v_int16>::vlanes();
+    vint32m4_t v = __riscv_vwmul(a, b, vl);
+    vl = VTraits<v_int32>::vlanes();
+    v_int32 v0 = __riscv_vnsra(__riscv_vreinterpret_i64m4(v), 0, vl);
+    v_int32 v1 = __riscv_vnsra(__riscv_vreinterpret_i64m4(v), 32, vl);
+    return __riscv_vadd(v0, v1, vl);
 }
-
-inline v_int32 v_dotprod(const v_int16& a, const v_int16& b, const v_int32& c)
-{
-    vint32m4_t temp1 = __riscv_vwmul(a, b, VTraits<v_int16>::vlanes());
-    return __riscv_vadd(v_hadd(temp1), c, VTraits<v_int32>::vlanes());
+inline v_int32 v_dotprod(const v_int16& a, const v_int16& b, const v_int32& c) {
+    return __riscv_vadd(v_dotprod(a, b), c, VTraits<v_int32>::vlanes());
 }
 
 // 32 >> 64
 inline v_int64 v_dotprod(const v_int32& a, const v_int32& b)
 {
-    vuint64m2_t one64 = __riscv_vmv_v_x_u64m2(1, VTraits<v_uint64>::vlanes()); \
-    vuint32m2_t one32 = __riscv_vreinterpret_u32m2(one64); \
-    vbool16_t mask = __riscv_vmseq(one32, 1, VTraits<v_uint32>::vlanes()); \
-    vint64m4_t temp1 = __riscv_vwmul(a, b, VTraits<v_int32>::vlanes()); \
+    vbool16_t mask = __riscv_vreinterpret_b16(
+            __riscv_vmv_v_x_u8m1(0b01010101, __riscv_vsetvlmax_e8m1()));
+    vint64m4_t temp1 = __riscv_vwmul(a, b, VTraits<v_int32>::vlanes());
     vint64m4_t temp2 = __riscv_vslide1down(temp1, 0, VTraits<v_int32>::vlanes());
     vint64m4_t res = __riscv_vadd(temp1, temp2, VTraits<v_int32>::vlanes());
-    res = __riscv_vcompress(res, mask, VTraits<v_int32>::vlanes()); \
-    return __riscv_vlmul_trunc_i64m2(res); \
+    res = __riscv_vcompress(res, mask, VTraits<v_int32>::vlanes());
+    return __riscv_vlmul_trunc_i64m2(res);
 }
-inline v_int64 v_dotprod(const v_int32& a, const v_int32& b, const v_int64& c)
-{
-    vuint64m2_t one64 = __riscv_vmv_v_x_u64m2(1, VTraits<v_uint64>::vlanes()); \
-    vuint32m2_t one32 = __riscv_vreinterpret_u32m2(one64); \
-    vbool16_t mask = __riscv_vmseq(one32, 1, VTraits<v_uint32>::vlanes()); \
-    vint64m4_t temp1 = __riscv_vwmul(a, b, VTraits<v_int32>::vlanes()); \
-    vint64m4_t temp2 = __riscv_vslide1down(temp1, 0, VTraits<v_int32>::vlanes());
-    vint64m4_t res = __riscv_vadd(temp1, temp2, VTraits<v_int32>::vlanes());
-    res = __riscv_vcompress(res, mask, VTraits<v_int32>::vlanes()); \
-    return __riscv_vadd(__riscv_vlmul_trunc_i64m2(res), c, VTraits<v_int64>::vlanes()); \
+inline v_int64 v_dotprod(const v_int32& a, const v_int32& b, const v_int64& c) {
+    return __riscv_vadd(v_dotprod(a, b), c, VTraits<v_int64>::vlanes());
 }
 
 // 8 >> 32
 inline v_uint32 v_dotprod_expand(const v_uint8& a, const v_uint8& b)
 {
-    vuint32m2_t one32 = __riscv_vmv_v_x_u32m2(1, VTraits<v_uint32>::vlanes()); \
-    vuint8m2_t one8 = __riscv_vreinterpret_u8m2(one32); \
-    vbool4_t mask = __riscv_vmseq(one8, 1, VTraits<v_uint8>::vlanes()); \
-    vuint16m4_t t0 = __riscv_vwmulu(a, b, VTraits<v_uint8>::vlanes()); \
-    vuint16m4_t t1= __riscv_vslide1down(t0, 0, VTraits<v_uint8>::vlanes());
-    vuint16m4_t t2= __riscv_vslide1down(t1, 0, VTraits<v_uint8>::vlanes());
-    vuint16m4_t t3= __riscv_vslide1down(t2, 0, VTraits<v_uint8>::vlanes());
-    vuint32m8_t res = __riscv_vadd(__riscv_vwaddu_vv(t2, t3, VTraits<v_uint8>::vlanes()), __riscv_vwaddu_vv(t0, t1, VTraits<v_uint8>::vlanes()), VTraits<v_uint8>::vlanes());
-    res = __riscv_vcompress(res, mask, VTraits<v_uint8>::vlanes()); \
-    return __riscv_vlmul_trunc_u32m2(res);
+    size_t vl = VTraits<v_uint8>::vlanes();
+    vuint16m4_t v = __riscv_vwmulu(a, b, vl);
+    vl = VTraits<v_uint32>::vlanes();
+    v_uint32 v01 = __riscv_vnsrl(__riscv_vreinterpret_u64m4(v), 0, vl);
+    v_uint32 v23 = __riscv_vnsrl(__riscv_vreinterpret_u64m4(v), 32, vl);
+    vuint16m1_t v0 = __riscv_vnsrl(v01, 0, vl);
+    vuint16m1_t v1 = __riscv_vnsrl(v01, 16, vl);
+    vuint16m1_t v2 = __riscv_vnsrl(v23, 0, vl);
+    vuint16m1_t v3 = __riscv_vnsrl(v23, 16, vl);
+    return __riscv_vadd(__riscv_vwaddu_vv(v0, v1, vl), __riscv_vwaddu_vv(v2, v3, vl), vl);
 }
-
-inline v_uint32 v_dotprod_expand(const v_uint8& a, const v_uint8& b,
-                                  const v_uint32& c)
-{
-    vuint32m2_t one32 = __riscv_vmv_v_x_u32m2(1, VTraits<v_uint32>::vlanes()); \
-    vuint8m2_t one8 = __riscv_vreinterpret_u8m2(one32); \
-    vbool4_t mask = __riscv_vmseq(one8, 1, VTraits<v_uint8>::vlanes()); \
-    vuint16m4_t t0 = __riscv_vwmulu(a, b, VTraits<v_uint8>::vlanes()); \
-    vuint16m4_t t1= __riscv_vslide1down(t0, 0, VTraits<v_uint8>::vlanes());
-    vuint16m4_t t2= __riscv_vslide1down(t1, 0, VTraits<v_uint8>::vlanes());
-    vuint16m4_t t3= __riscv_vslide1down(t2, 0, VTraits<v_uint8>::vlanes());
-    vuint32m8_t res = __riscv_vadd(__riscv_vwaddu_vv(t2, t3, VTraits<v_uint8>::vlanes()), __riscv_vwaddu_vv(t0, t1, VTraits<v_uint8>::vlanes()), VTraits<v_uint8>::vlanes());
-    res = __riscv_vcompress(res, mask, VTraits<v_uint8>::vlanes()); \
-    return __riscv_vadd(__riscv_vlmul_trunc_u32m2(res), c, VTraits<v_uint8>::vlanes());
+inline v_uint32 v_dotprod_expand(const v_uint8& a, const v_uint8& b, const v_uint32& c) {
+    return __riscv_vadd(v_dotprod_expand(a, b), c, VTraits<v_uint32>::vlanes());
 }
 
 inline v_int32 v_dotprod_expand(const v_int8& a, const v_int8& b)
 {
-    vuint32m2_t one32 = __riscv_vmv_v_x_u32m2(1, VTraits<v_uint32>::vlanes()); \
-    vuint8m2_t one8 = __riscv_vreinterpret_u8m2(one32); \
-    vbool4_t mask = __riscv_vmseq(one8, 1, VTraits<v_uint8>::vlanes()); \
-    vint16m4_t t0 = __riscv_vwmul(a, b, VTraits<v_int8>::vlanes()); \
-    vint16m4_t t1= __riscv_vslide1down(t0, 0, VTraits<v_int8>::vlanes());
-    vint16m4_t t2= __riscv_vslide1down(t1, 0, VTraits<v_int8>::vlanes());
-    vint16m4_t t3= __riscv_vslide1down(t2, 0, VTraits<v_int8>::vlanes());
-    vint32m8_t res = __riscv_vadd(__riscv_vwadd_vv(t2, t3, VTraits<v_int8>::vlanes()), __riscv_vwadd_vv(t0, t1, VTraits<v_int8>::vlanes()), VTraits<v_int8>::vlanes());
-    res = __riscv_vcompress(res, mask, VTraits<v_int8>::vlanes()); \
-    return __riscv_vlmul_trunc_i32m2(res);
+    size_t vl = VTraits<v_int8>::vlanes();
+    vint16m4_t v = __riscv_vwmul(a, b, vl);
+    vl = VTraits<v_int32>::vlanes();
+    v_int32 v01 = __riscv_vnsra(__riscv_vreinterpret_i64m4(v), 0, vl);
+    v_int32 v23 = __riscv_vnsra(__riscv_vreinterpret_i64m4(v), 32, vl);
+    vint16m1_t v0 = __riscv_vnsra(v01, 0, vl);
+    vint16m1_t v1 = __riscv_vnsra(v01, 16, vl);
+    vint16m1_t v2 = __riscv_vnsra(v23, 0, vl);
+    vint16m1_t v3 = __riscv_vnsra(v23, 16, vl);
+    return __riscv_vadd(__riscv_vwadd_vv(v0, v1, vl), __riscv_vwadd_vv(v2, v3, vl), vl);
 }
-
-inline v_int32 v_dotprod_expand(const v_int8& a, const v_int8& b,
-                                  const v_int32& c)
-{
-    vuint32m2_t one32 = __riscv_vmv_v_x_u32m2(1, VTraits<v_uint32>::vlanes()); \
-    vuint8m2_t one8 = __riscv_vreinterpret_u8m2(one32); \
-    vbool4_t mask = __riscv_vmseq(one8, 1, VTraits<v_uint8>::vlanes()); \
-    vint16m4_t t0 = __riscv_vwmul(a, b, VTraits<v_int8>::vlanes()); \
-    vint16m4_t t1= __riscv_vslide1down(t0, 0, VTraits<v_int8>::vlanes());
-    vint16m4_t t2= __riscv_vslide1down(t1, 0, VTraits<v_int8>::vlanes());
-    vint16m4_t t3= __riscv_vslide1down(t2, 0, VTraits<v_int8>::vlanes());
-    vint32m8_t res = __riscv_vadd(__riscv_vwadd_vv(t2, t3, VTraits<v_int8>::vlanes()), __riscv_vwadd_vv(t0, t1, VTraits<v_int8>::vlanes()), VTraits<v_int8>::vlanes());
-    res = __riscv_vcompress(res, mask, VTraits<v_int8>::vlanes()); \
-    return __riscv_vadd(__riscv_vlmul_trunc_i32m2(res), c, VTraits<v_int8>::vlanes());
+inline v_int32 v_dotprod_expand(const v_int8& a, const v_int8& b, const v_int32& c) {
+    return __riscv_vadd(v_dotprod_expand(a, b), c, VTraits<v_int32>::vlanes());
 }
 
 
 // // 16 >> 64
 inline v_uint64 v_dotprod_expand(const v_uint16& a, const v_uint16& b)
 {
-    vuint64m2_t one64 = __riscv_vmv_v_x_u64m2(1, VTraits<v_uint64>::vlanes()); \
-    vuint16m2_t one16 = __riscv_vreinterpret_u16m2(one64); \
-    vbool8_t mask = __riscv_vmseq(one16, 1, VTraits<v_uint16>::vlanes()); \
-    vuint32m4_t t0 = __riscv_vwmulu(a, b, VTraits<v_uint16>::vlanes()); \
+    vbool8_t mask = __riscv_vreinterpret_b8(
+            __riscv_vmv_v_x_u8m1(0b00010001, __riscv_vsetvlmax_e8m1()));
+    vuint32m4_t t0 = __riscv_vwmulu(a, b, VTraits<v_uint16>::vlanes());
     vuint32m4_t t1= __riscv_vslide1down(t0, 0, VTraits<v_uint16>::vlanes());
     vuint32m4_t t2= __riscv_vslide1down(t1, 0, VTraits<v_uint16>::vlanes());
     vuint32m4_t t3= __riscv_vslide1down(t2, 0, VTraits<v_uint16>::vlanes());
     vuint64m8_t res = __riscv_vadd(__riscv_vwaddu_vv(t2, t3, VTraits<v_uint16>::vlanes()), __riscv_vwaddu_vv(t0, t1, VTraits<v_uint16>::vlanes()), VTraits<v_uint16>::vlanes());
-    res = __riscv_vcompress(res, mask, VTraits<v_uint16>::vlanes()); \
+    res = __riscv_vcompress(res, mask, VTraits<v_uint16>::vlanes());
     return __riscv_vlmul_trunc_u64m2(res);
 }
-inline v_uint64 v_dotprod_expand(const v_uint16& a, const v_uint16& b, const v_uint64& c)
-{
-    vuint64m2_t one64 = __riscv_vmv_v_x_u64m2(1, VTraits<v_uint64>::vlanes()); \
-    vuint16m2_t one16 = __riscv_vreinterpret_u16m2(one64); \
-    vbool8_t mask = __riscv_vmseq(one16, 1, VTraits<v_uint16>::vlanes()); \
-    vuint32m4_t t0 = __riscv_vwmulu(a, b, VTraits<v_uint16>::vlanes()); \
-    vuint32m4_t t1= __riscv_vslide1down(t0, 0, VTraits<v_uint16>::vlanes());
-    vuint32m4_t t2= __riscv_vslide1down(t1, 0, VTraits<v_uint16>::vlanes());
-    vuint32m4_t t3= __riscv_vslide1down(t2, 0, VTraits<v_uint16>::vlanes());
-    vuint64m8_t res = __riscv_vadd(__riscv_vwaddu_vv(t2, t3, VTraits<v_uint16>::vlanes()), __riscv_vwaddu_vv(t0, t1, VTraits<v_uint16>::vlanes()), VTraits<v_uint16>::vlanes());
-    res = __riscv_vcompress(res, mask, VTraits<v_uint16>::vlanes()); \
-    return __riscv_vadd(__riscv_vlmul_trunc_u64m2(res), c, VTraits<v_uint16>::vlanes());
+inline v_uint64 v_dotprod_expand(const v_uint16& a, const v_uint16& b, const v_uint64& c) {
+    return __riscv_vadd(v_dotprod_expand(a, b), c, VTraits<v_uint64>::vlanes());
 }
 
 inline v_int64 v_dotprod_expand(const v_int16& a, const v_int16& b)
 {
-    vuint64m2_t one64 = __riscv_vmv_v_x_u64m2(1, VTraits<v_uint64>::vlanes()); \
-    vuint16m2_t one16 = __riscv_vreinterpret_u16m2(one64); \
-    vbool8_t mask = __riscv_vmseq(one16, 1, VTraits<v_uint16>::vlanes()); \
+    vbool8_t mask = __riscv_vreinterpret_b8(
+            __riscv_vmv_v_x_u8m1(0b00010001, __riscv_vsetvlmax_e8m1()));
     vint32m4_t t0 = __riscv_vwmul(a, b, VTraits<v_int16>::vlanes()); \
     vint32m4_t t1= __riscv_vslide1down(t0, 0, VTraits<v_int16>::vlanes());
     vint32m4_t t2= __riscv_vslide1down(t1, 0, VTraits<v_int16>::vlanes());
@@ -2000,19 +1932,8 @@ inline v_int64 v_dotprod_expand(const v_int16& a, const v_int16& b)
     res = __riscv_vcompress(res, mask, VTraits<v_int16>::vlanes()); \
     return __riscv_vlmul_trunc_i64m2(res);
 }
-inline v_int64 v_dotprod_expand(const v_int16& a, const v_int16& b,
-                                  const v_int64& c)
-{
-    vuint64m2_t one64 = __riscv_vmv_v_x_u64m2(1, VTraits<v_uint64>::vlanes()); \
-    vuint16m2_t one16 = __riscv_vreinterpret_u16m2(one64); \
-    vbool8_t mask = __riscv_vmseq(one16, 1, VTraits<v_uint16>::vlanes()); \
-    vint32m4_t t0 = __riscv_vwmul(a, b, VTraits<v_int16>::vlanes()); \
-    vint32m4_t t1= __riscv_vslide1down(t0, 0, VTraits<v_int16>::vlanes());
-    vint32m4_t t2= __riscv_vslide1down(t1, 0, VTraits<v_int16>::vlanes());
-    vint32m4_t t3= __riscv_vslide1down(t2, 0, VTraits<v_int16>::vlanes());
-    vint64m8_t res = __riscv_vadd(__riscv_vwadd_vv(t2, t3, VTraits<v_int16>::vlanes()), __riscv_vwadd_vv(t0, t1, VTraits<v_int16>::vlanes()), VTraits<v_int16>::vlanes());
-    res = __riscv_vcompress(res, mask, VTraits<v_int16>::vlanes()); \
-    return __riscv_vadd(__riscv_vlmul_trunc_i64m2(res), c, VTraits<v_int16>::vlanes());
+inline v_int64 v_dotprod_expand(const v_int16& a, const v_int16& b, const v_int64& c) {
+    return __riscv_vadd(v_dotprod_expand(a, b), c, VTraits<v_int64>::vlanes());
 }
 
 // // 32 >> 64f
